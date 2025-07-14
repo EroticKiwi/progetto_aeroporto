@@ -10,12 +10,10 @@ public class DBConnection {
 	
 	private static DBConnection instance;
 	
-	Connection connection;
-	Statement statement;
-	ResultSet rs;
-	
-	boolean connected;
-	
+	public Connection connection;
+	public Statement statement;
+	public ResultSet rs;
+		
 	private DBConnection() {
 		Connect();
 	}
@@ -29,9 +27,9 @@ public class DBConnection {
 	}
 	
 	public void Connect() {
-		String url = "jdbc:postgresql://localhost:5432/Aeroporto";
-		String username = "";
-		String password = ""; // 1234
+		String url = "jdbc:postgresql://localhost:5432/aeroporto";
+		String username = "postgres";
+		String password = "1234"; // 1234
 		
 		try {
 			connection = DriverManager.getConnection(url, username, password);
