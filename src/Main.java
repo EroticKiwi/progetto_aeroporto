@@ -10,8 +10,6 @@ import model.DataModel;
 public class Main {
 
 	public static void main(String[] args) {
-		
-		DataController.getInstance().trovaAeroporto(1);
 
 	}
 

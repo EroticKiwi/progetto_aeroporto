@@ -80,8 +80,10 @@ public class DataModel implements DAOGenerale{
 		ResultSet rs = null;
 		
 		try {
-			statement = DBConnection.getInstance().connection.prepareStatement(query);
-			AssemblaStatement(statement, params);
+			statement = DBConnection.getInstance().connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); // Ci serve per poter scorrere avanti ed indietro il result set.
+			if(params != null) {
+				AssemblaStatement(statement, params);
+			}
 			rs = statement.executeQuery();
 		} catch(SQLException e) {
 			throw new TrovaException();

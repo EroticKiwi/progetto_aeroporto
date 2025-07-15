@@ -33,6 +33,7 @@ public class DBConnection {
 		
 		try {
 			connection = DriverManager.getConnection(url, username, password);
+			connection.setAutoCommit(false);
 			System.out.println("Connessione avvenuta!");
 		} catch (SQLException e) {
 			System.out.println("errore");

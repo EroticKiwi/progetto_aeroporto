@@ -234,4 +234,38 @@ public class DataController {
 		}
 		
 	}
+	
+	public void trovaTuttiAeroporti() {
+		
+		String query = "SELECT * FROM Aeroporto";
+		
+		entitaObjs.clear();
+		
+		try {
+			ResultSet rs = DataModel.getInstance().trovaEntita(query, null);
+			
+			if(!rs.next()) {
+				// Dici alla view che nessun aeroporto è stato trovato!
+				System.out.println("Non sono presenti aeroporti nel sistema");
+				rs.getStatement().close();
+				return;
+			}
+			
+			// Dobbiamo tornare al primo elemento del result set.
+			rs.beforeFirst();
+			
+			Aeroporto aeroporto;
+			while(rs.next()) {
+				aeroporto = new Aeroporto(rs.getInt("id"), rs.getString("citta"), rs.getString("nazione"), rs.getInt("numero_piste"));
+				entitaObjs.add(aeroporto);
+				System.out.println(aeroporto.toString());
+			}
+			
+			// Prosegui con le view
+						
+		} catch(SQLException | TrovaException e) {
+			// Comunica alla view che c'è stato un errore generico del DB
+			System.out.println(e.getMessage());
+		}
+	}
 }
