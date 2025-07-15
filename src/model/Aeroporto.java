@@ -7,7 +7,7 @@ public class Aeroporto {
 	String nazione;
 	
 	
-	public Aeroporto(int id, int numero_piste, String citta, String nazione) {
+	public Aeroporto(int id, String citta, String nazione, int numero_piste) {
 		this.id = id;
 		this.numero_piste = numero_piste;
 		this.citta = citta;
@@ -54,8 +54,8 @@ public class Aeroporto {
 		this.nazione = nazione;
 	}
 	
-	
-	
-	
+	public String toString() {
+		return id + ", " + citta + ", " + nazione + ", " + numero_piste;
+	}
 	
 }

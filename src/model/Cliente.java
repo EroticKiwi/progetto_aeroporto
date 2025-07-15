@@ -6,7 +6,7 @@ public class Cliente extends Utente{
 	String cognome;
 	String metodo_pagamento;
 	
-	public Cliente(int id, String email, String password) {
+	public Cliente(int id, String nome, String cognome, String email, String password, String metodo_pagamento) {
 		super(id, email, password);
 		setNome(nome);
 		setCognome(cognome);
@@ -30,6 +30,10 @@ public class Cliente extends Utente{
 	}
 	public void setMetodo_pagamento(String metodo_pagamento) {
 		this.metodo_pagamento = metodo_pagamento;
+	}
+	
+	public String toString() {
+		return id + ", " + nome + ", " + cognome + ", " + email + ", " + password + ", " + metodo_pagamento;
 	}
 	
 }
