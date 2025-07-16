@@ -194,7 +194,7 @@ public class DataController {
 			// Prosegui con le view
 			System.out.println("Inserimento andato a buon fine!");
 		} catch(InserisciException e) {
-			// Comunica alla view che c'è stato un errore durante l'inserimento!
+			// Comunica alla view che c'è stato un errore durante l'inserimento oppure esiste già un dato uguale!
 		}
 	}
 	
@@ -246,7 +246,7 @@ public class DataController {
 			
 			if(!rs.next()) {
 				// Dici alla view che nessun aeroporto è stato trovato!
-				System.out.println("Non sono presenti aeroporti nel sistema");
+				System.out.println("Nessun aeroporto presente nel sistema!");
 				rs.getStatement().close();
 				return;
 			}
@@ -255,11 +255,13 @@ public class DataController {
 			rs.beforeFirst();
 			
 			Aeroporto aeroporto;
-			while(rs.next()) {
+			while(rs.next()) { // Non c'è bisogno di fermare se rs è vuoto, si fermerà da solo!
 				aeroporto = new Aeroporto(rs.getInt("id"), rs.getString("citta"), rs.getString("nazione"), rs.getInt("numero_piste"));
 				entitaObjs.add(aeroporto);
 				System.out.println(aeroporto.toString());
 			}
+			
+			rs.getStatement().close();
 			
 			// Prosegui con le view
 						
@@ -267,5 +269,22 @@ public class DataController {
 			// Comunica alla view che c'è stato un errore generico del DB
 			System.out.println(e.getMessage());
 		}
+	}
+	
+	public void eliminaAeroporto(int id) {
+		
+		String query = "DELETE FROM Aeroporto WHERE id = ?";
+		Map<Integer, Object> params = new HashMap<Integer, Object>();
+		
+		params.put(1, id);
+		
+		try {
+			DataModel.getInstance().eliminaEntita(query, params);
+			System.out.println("L'aeroporto è stato cancellato!");
+			// Prosegui con le view
+		} catch(EliminaException e) {
+			// Comunica alla view che c'è stato un errore generico del DB
+		}
+		
 	}
 }

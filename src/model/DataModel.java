@@ -99,8 +99,8 @@ public class DataModel implements DAOGenerale{
 		
 		for(Map.Entry<Integer, Object> element : params.entrySet()) {
 			
-			index = element.getKey();
-			value = element.getValue();
+			index = element.getKey(); // ? interessato
+			value = element.getValue(); // Valore da inserire nel ? interessato di index
 			
 			statement.setObject(index, value);
 			//System.out.println("DEBUG!");
