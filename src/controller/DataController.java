@@ -194,6 +194,7 @@ public class DataController {
 			// Prosegui con le view
 			System.out.println("Inserimento andato a buon fine!");
 		} catch(InserisciException e) {
+			System.out.println(e.getMessage());
 			// Comunica alla view che c'è stato un errore durante l'inserimento oppure esiste già un dato uguale!
 		}
 	}

@@ -53,9 +53,14 @@ public class DataModel implements DAOGenerale{
 			 statement = DBConnection.getInstance().connection.prepareStatement(query);
 			 AssemblaStatement(statement, params);
 			 statement.execute();
-			 statement.close();
 		} catch (SQLException e) {
 			throw new InserisciException(e.getSQLState());
+		} finally {
+			try {
+				 statement.close();
+			} catch(SQLException e) {
+				throw new InserisciException(e.getSQLState());
+			}
 		}
 		
 	}
@@ -71,6 +76,12 @@ public class DataModel implements DAOGenerale{
 		} catch (SQLException e) {
 			System.out.println(e.getSQLState());
 			throw new EliminaException();
+		}	finally {
+			try {
+				 statement.close();
+			} catch(SQLException e) {
+				throw new EliminaException();
+			}
 		}
 	}
 
