@@ -97,6 +97,7 @@ public class DataModel implements DAOGenerale{
 			}
 			rs = statement.executeQuery();
 		} catch(SQLException e) {
+			System.out.println(e.getSQLState());
 			throw new TrovaException();
 		}
 		
