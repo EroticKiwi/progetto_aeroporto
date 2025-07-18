@@ -9,19 +9,28 @@ import java.sql.SQLException;
  * */
 
 public class InserisciException extends Throwable
-{
-	private String errorCode;
+{	
 	
-	public InserisciException(String errorCode) {
-		this.errorCode = errorCode;
+	String message;
+	
+	public InserisciException(String message) {
+		this.message = message.toLowerCase();
 	}
 	
     public String getMessage() {
-    	switch(this.errorCode) {
-    		case "23505":
-    			System.out.println("Almeno uno dei dati inseriti è già presente nella base dati.");
+    	
+    	if(message.contains("nome")) {
+    		return "Il campo 'Nome' è già presente nella base dati.";
     	}
     	
-    	return errorCode;
+    	if(message.contains("cognome")) {
+    		return "Il campo 'Cognome' è già presente nella base dati.";
+    	}
+    	
+    	if(message.contains("email")) {
+    		return "Il campo 'Email' è già presente nella base dati.";
+    	}
+    	
+    	return message;
     }
 }

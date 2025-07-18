@@ -54,7 +54,7 @@ public class DataModel implements DAOGenerale{
 			 AssemblaStatement(statement, params);
 			 statement.execute();
 		} catch (SQLException e) {
-			throw new InserisciException(e.getSQLState());
+			throw new InserisciException(e.getMessage());
 		} finally {
 			try {
 				 statement.close();

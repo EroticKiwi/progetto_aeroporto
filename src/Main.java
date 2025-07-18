@@ -11,7 +11,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		ViewController.getInstance().ClientLogin_Activate();
+		ViewController.getInstance().ClientRegister_Activate();
 		
 	}
 }

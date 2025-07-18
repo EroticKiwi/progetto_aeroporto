@@ -77,7 +77,7 @@ public class DataController {
 			// Prosegui con le view
 			
 		} catch (InserisciException e) {
-			// Comunica alla view che c'è stato un errore durante l'inserimento!
+			ViewController.getInstance().ClientRegister_ShowError(e.getMessage());
 		} catch (SQLException | TrovaException e) { /* errore nell'rs.next() o nella chiusura dello statement*/
 			// Comunica alla view che c'è stato un errore generico del database! 
 		}

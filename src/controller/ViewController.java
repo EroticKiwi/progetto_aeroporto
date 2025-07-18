@@ -14,7 +14,7 @@ public class ViewController {
 	private ViewController() {
 		views = new ArrayList<JFrame>();
 		views.add(new ClientLoginForm()); // views.get(0) = View del login cliente
-		// views.add(new ClientRegisterForm()); // views.get(1) = View della registrazione cliente
+		views.add(new ClientRegisterForm()); // views.get(1) = View della registrazione cliente
 		// views.add(new AdminLoginForm()); // views.get(2) = View del login amministratore
 	}
 	
@@ -46,5 +46,19 @@ public class ViewController {
 	public void ClientLogin_ShowLoginError() {
 		ClientLoginForm clientLoginForm = (ClientLoginForm) views.get(0);
 		clientLoginForm.activateError();
+	}
+	
+	// Metodi view Cliente Register
+	
+	public void ClientRegister_Activate() {
+		
+		DisableAllViews();
+		
+		views.get(1).setVisible(true);
+	}
+	
+	public void ClientRegister_ShowError(String errorMessage) {
+		ClientRegisterForm clientRegisterForm = (ClientRegisterForm) views.get(1);
+		clientRegisterForm.activateError(errorMessage);
 	}
 }

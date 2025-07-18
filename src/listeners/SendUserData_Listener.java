@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JFrame;
 
 import controller.DataController;
-import view.ClientLoginForm;
+import view.*;
 
 public class SendUserData_Listener implements ActionListener{
 	
@@ -22,6 +22,10 @@ public class SendUserData_Listener implements ActionListener{
 			SendClientLoginData();
 		}
 		
+		if(parent instanceof ClientRegisterForm) {
+			SendClientRegisterData();
+		}
+		
 	}
 	
 	void SendClientLoginData() { // Mandiamo i dati relativi al login dell'utente
@@ -31,5 +35,17 @@ public class SendUserData_Listener implements ActionListener{
 		String password = clientLogin.getPassword();
 		
 		DataController.getInstance().trovaCliente(email, password);
+	}
+	
+	void SendClientRegisterData() { // Mandiamo i dati relativi alla registrazione dell'utente
+		
+		ClientRegisterForm clientRegister = (ClientRegisterForm) parent;
+		String nome = clientRegister.getNome();
+		String cognome = clientRegister.getCognome();
+		String email = clientRegister.getEmail();
+		String password = clientRegister.getPassword();
+		String metodoPagamento = clientRegister.getMetodoPagamento();
+		
+		DataController.getInstance().inserisciCliente(nome, cognome, email, password, metodoPagamento);
 	}
 }
