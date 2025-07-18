@@ -158,6 +158,7 @@ public class DataController {
 			
 			if(!rs.next()) {
 				// Dici alla view che nessun amministratore è stato trovato!
+				ViewController.getInstance().AdminLogin_ShowLoginError();
 				System.out.println("La combinazione di email, password e chiave d'accesso potrebbe essere sbagliata!");
 				rs.getStatement().close();
 				return;

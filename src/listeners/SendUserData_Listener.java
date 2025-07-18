@@ -26,6 +26,10 @@ public class SendUserData_Listener implements ActionListener{
 			SendClientRegisterData();
 		}
 		
+		if(parent instanceof AdminLoginForm) {
+			SendAdminLoginData();
+		}
+		
 	}
 	
 	void SendClientLoginData() { // Mandiamo i dati relativi al login dell'utente
@@ -47,5 +51,21 @@ public class SendUserData_Listener implements ActionListener{
 		String metodoPagamento = clientRegister.getMetodoPagamento();
 		
 		DataController.getInstance().inserisciCliente(nome, cognome, email, password, metodoPagamento);
+	}
+
+	void SendAdminLoginData() { // Mandiamo i dati relativi al login dell'amministratore
+		
+		AdminLoginForm adminLoginForm = (AdminLoginForm) parent;
+		String email = adminLoginForm.getEmail();
+		String password = adminLoginForm.getPassword();
+		int chiaveAccesso = 0;
+		
+		try { // si mette nel try catch siccome è possibile che l'utente inserisca dei caratteri non numerici!
+			   chiaveAccesso = Integer.parseInt(adminLoginForm.getChiaveAccesso());
+			} catch (NumberFormatException e) {
+			   chiaveAccesso = 0;
+		}
+		
+		DataController.getInstance().trovaAmministratore(email, password, chiaveAccesso);;
 	}
 }

@@ -6,7 +6,6 @@ import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 
 import listeners.SendUserData_Listener;
-import listeners.goTo.GoToAdminLogin_Listener;
 import listeners.goTo.GoToClientLogin_Listener;
 import listeners.goTo.GoToClientRegister_Listener;
 
@@ -29,17 +28,18 @@ import java.util.Map;
 
 import javax.swing.JButton;
 
-public class ClientLoginForm extends JFrame {
+public class AdminLoginForm extends JFrame {
 
 	private JPanel contentPanel;
 	
 	public JTextField emailField;
 	public JTextField passwordField;
-	
+	public JTextField chiaveAccessoField;
+
 	private JLabel loginErrorField;
 	
-	public ClientLoginForm() {
-		setTitle("Login Cliente - Aeroporto");
+	public AdminLoginForm() {
+		setTitle("Login Amministratore - Aeroporto");
 		setResizable(false);
 		setAlwaysOnTop(true);	// La pagina della finestra sta sempre "davanti" alle altre
 		setBackground(new Color(192, 192, 192));	// colore grigio dello sfondo
@@ -62,13 +62,13 @@ public class ClientLoginForm extends JFrame {
 		
 		JPanel loginFields_Panel = new JPanel();	// secondo contenitore
 		loginFields_Panel.setBackground(new Color(192, 192, 192));
-		loginFields_Panel.setBounds(15, 67, 762, 128);
+		loginFields_Panel.setBounds(15, 67, 744, 128);
 		contentPanel.add(loginFields_Panel);
 		GridBagLayout gbl_loginFields_Panel = new GridBagLayout();
 		gbl_loginFields_Panel.columnWidths = new int[] {200, 544};
-		gbl_loginFields_Panel.rowHeights = new int[] {42, 42};
-		gbl_loginFields_Panel.columnWeights = new double[]{0.0, 0.0};
-		gbl_loginFields_Panel.rowWeights = new double[]{0.0, 0.0};
+		gbl_loginFields_Panel.rowHeights = new int[] {42, 42, 42};
+		gbl_loginFields_Panel.columnWeights = new double[]{0.0, 1.0};
+		gbl_loginFields_Panel.rowWeights = new double[]{0.0, 0.0, 0.0};
 		loginFields_Panel.setLayout(gbl_loginFields_Panel);
 		
 		JLabel emailLabel = new JLabel("Email:");
@@ -99,7 +99,7 @@ public class ClientLoginForm extends JFrame {
 		GridBagConstraints gbc_passwordLabel = new GridBagConstraints();
 		gbc_passwordLabel.anchor = GridBagConstraints.SOUTH;
 		gbc_passwordLabel.fill = GridBagConstraints.HORIZONTAL;
-		gbc_passwordLabel.insets = new Insets(0, 0, 0, 5);
+		gbc_passwordLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_passwordLabel.gridx = 0;
 		gbc_passwordLabel.gridy = 1;
 		loginFields_Panel.add(passwordLabel, gbc_passwordLabel);
@@ -109,41 +109,52 @@ public class ClientLoginForm extends JFrame {
 		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		passwordField.setColumns(10);
 		GridBagConstraints gbc_passwordField = new GridBagConstraints();
+		gbc_passwordField.insets = new Insets(0, 0, 5, 0);
 		gbc_passwordField.fill = GridBagConstraints.BOTH;
 		gbc_passwordField.gridx = 1;
 		gbc_passwordField.gridy = 1;
 		loginFields_Panel.add(passwordField, gbc_passwordField);
 		
-		loginErrorField = new JLabel("La combinazione di email e password potrebbe essere errata!");
+		JLabel chiaveAccessoLabel = new JLabel("Chiave d'accesso");
+		chiaveAccessoLabel.setFont(new Font("Yu Gothic Medium", Font.PLAIN, 20));
+		GridBagConstraints gbc_chiaveAccessoLabel = new GridBagConstraints();
+		gbc_chiaveAccessoLabel.anchor = GridBagConstraints.SOUTH;
+		gbc_chiaveAccessoLabel.insets = new Insets(0, 0, 0, 5);
+		gbc_chiaveAccessoLabel.gridx = 0;
+		gbc_chiaveAccessoLabel.gridy = 2;
+		loginFields_Panel.add(chiaveAccessoLabel, gbc_chiaveAccessoLabel);
+		
+		chiaveAccessoField = new JTextField();
+		chiaveAccessoField.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		GridBagConstraints gbc_chiaveAcessoField = new GridBagConstraints();
+		gbc_chiaveAcessoField.fill = GridBagConstraints.BOTH;
+		gbc_chiaveAcessoField.gridx = 1;
+		gbc_chiaveAcessoField.gridy = 2;
+		loginFields_Panel.add(chiaveAccessoField, gbc_chiaveAcessoField);
+		chiaveAccessoField.setColumns(10);
+		
+		loginErrorField = new JLabel("La combinazione di email, password e chiave d'accesso potrebbe essere errata!");
 		loginErrorField.setHorizontalAlignment(SwingConstants.CENTER);
 		loginErrorField.setForeground(new Color(255, 0, 0));
 		loginErrorField.setFont(new Font("Trebuchet MS", Font.BOLD, 18));
-		loginErrorField.setBounds(128, 192, 530, 21);
+		loginErrorField.setBounds(43, 205, 700, 21);
 		loginErrorField.setVisible(false);
 		contentPanel.add(loginErrorField);
 		
 		JButton loginButton = new JButton("Accedi");
 		loginButton.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 19));
-		loginButton.setBounds(293, 236, 200, 50);
+		loginButton.setBounds(293, 247, 200, 50);
 		SendUserData_Listener listener = new SendUserData_Listener(this);
 		loginButton.addActionListener(listener);
 		contentPanel.add(loginButton);
 		
-		JLabel registerLabel = new JLabel("<html><u>Non hai ancora un account?  Registrati</u></html>");
-		registerLabel.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
-		registerLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		registerLabel.setBounds(143, 296, 500, 20);
-		GoToClientRegister_Listener clientRegisterListener = new GoToClientRegister_Listener();
-		registerLabel.addMouseListener(clientRegisterListener);
-		contentPanel.add(registerLabel);
-		
-		JLabel amministratoreLabel = new JLabel("<html><u>Sei un amministratore?  Accedi</u></html>");
-		amministratoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		amministratoreLabel.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
-		amministratoreLabel.setBounds(143, 321, 500, 20);
-		GoToAdminLogin_Listener adminLoginListener = new GoToAdminLogin_Listener();
-		amministratoreLabel.addMouseListener(adminLoginListener);
-		contentPanel.add(amministratoreLabel);
+		JLabel clientLabel = new JLabel("<html><u>Sei un cliente? Accedi!</u></html>");
+		clientLabel.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
+		clientLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		clientLabel.setBounds(143, 313, 500, 20);
+		GoToClientLogin_Listener clientLoginListener = new GoToClientLogin_Listener();
+		clientLabel.addMouseListener(clientLoginListener);
+		contentPanel.add(clientLabel);
 	}
 	
 	public void activateError() { // Attiva il testo di errore!
@@ -156,5 +167,9 @@ public class ClientLoginForm extends JFrame {
 	
 	public String getPassword() {
 		return passwordField.getText();
+	}
+	
+	public String getChiaveAccesso() {
+		return chiaveAccessoField.getText();
 	}
 }

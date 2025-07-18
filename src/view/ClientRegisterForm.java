@@ -6,6 +6,8 @@ import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 
 import listeners.SendUserData_Listener;
+import listeners.goTo.GoToAdminLogin_Listener;
+import listeners.goTo.GoToClientLogin_Listener;
 
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -39,7 +41,7 @@ public class ClientRegisterForm extends JFrame {
 	private JLabel registerErrorField;
 	
 	public ClientRegisterForm() {
-		setTitle("Login Cliente - Aeroporto");
+		setTitle("Registrazione Cliente - Aeroporto");
 		setResizable(false);
 		setAlwaysOnTop(true);
 		setBackground(new Color(192, 192, 192));
@@ -192,12 +194,16 @@ public class ClientRegisterForm extends JFrame {
 		accediClientLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		accediClientLabel.setFont(new Font("Yu Gothic UI", Font.BOLD | Font.ITALIC, 15));
 		accediClientLabel.setBounds(43, 382, 700, 20);
+		GoToClientLogin_Listener clientLoginListener = new GoToClientLogin_Listener();
+		accediClientLabel.addMouseListener(clientLoginListener);
 		contentPanel.add(accediClientLabel);
 		
 		JLabel accediAdminLabel = new JLabel("Sei un amministratore? Accedi!");
 		accediAdminLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		accediAdminLabel.setFont(new Font("Yu Gothic UI", Font.BOLD | Font.ITALIC, 15));
 		accediAdminLabel.setBounds(43, 405, 700, 20);
+		GoToAdminLogin_Listener adminLoginListener = new GoToAdminLogin_Listener();
+		accediAdminLabel.addMouseListener(adminLoginListener);
 		contentPanel.add(accediAdminLabel);
 	}
 	
