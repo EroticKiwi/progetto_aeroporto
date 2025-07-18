@@ -84,7 +84,6 @@ public class DataController {
 	}
 	
 	public void trovaCliente(String email, String password) { // Chiamato al Login del cliente
-		
 		String query = "SELECT * FROM Cliente WHERE email = ? AND password = ?";
 		Map<Integer, Object> params = new HashMap<Integer, Object>();
 		
@@ -97,7 +96,7 @@ public class DataController {
 			
 			if(!rs.next()) {
 				// Dici alla view che nessun cliente è stato trovato!
-				System.out.println("La combinazione di email e password potrebbe essere sbagliata!");
+				ViewController.getInstance().ClientLogin_ShowLoginError();
 				rs.getStatement().close();
 				return;
 			}		
