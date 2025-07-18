@@ -38,24 +38,26 @@ public class ClientLoginForm extends JFrame {
 	public ClientLoginForm() {
 		setTitle("Login Cliente - Aeroporto");
 		setResizable(false);
-		setAlwaysOnTop(true);
-		setBackground(new Color(192, 192, 192));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 801, 419);
-		contentPanel = new JPanel();
+		setAlwaysOnTop(true);	// La pagina della finestra sta sempre "davanti" alle altre
+		setBackground(new Color(192, 192, 192));	// colore grigio dello sfondo
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 	// chiude il programma quando schiacciamo la X
+		setSize(800, 400);	// Selezioniamo la dimensione della finestra
+		setLocationRelativeTo(null); // Centra la finestra sullo schermo
+		
+		contentPanel = new JPanel();	// primo contenitore
 		contentPanel.setBackground(new Color(192, 192, 192));
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPanel);
 		contentPanel.setLayout(null);
 		
-		JLabel loginText = new JLabel("Effettua l'accesso");
+		JLabel loginText = new JLabel("Effettua l'accesso"); // Scrive sulla finestra
 		loginText.setBounds(21, 5, 744, 44);
 		contentPanel.add(loginText);
 		loginText.setHorizontalAlignment(SwingConstants.CENTER);
 		loginText.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 25));
 		
-		JPanel loginFields_Panel = new JPanel();
+		JPanel loginFields_Panel = new JPanel();	// secondo contenitore
 		loginFields_Panel.setBackground(new Color(192, 192, 192));
 		loginFields_Panel.setBounds(15, 67, 762, 128);
 		contentPanel.add(loginFields_Panel);
@@ -66,7 +68,7 @@ public class ClientLoginForm extends JFrame {
 		gbl_loginFields_Panel.rowWeights = new double[]{0.0, 0.0};
 		loginFields_Panel.setLayout(gbl_loginFields_Panel);
 		
-		JLabel emailLabel = new JLabel("Inserisci l'email");
+		JLabel emailLabel = new JLabel("Email:");
 		emailLabel.setFont(new Font("Yu Gothic Medium", Font.PLAIN, 20));
 		emailLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_emailLabel = new GridBagConstraints();
@@ -88,7 +90,7 @@ public class ClientLoginForm extends JFrame {
 		loginFields_Panel.add(emailField, gbc_emailField);
 		emailField.setColumns(10);
 		
-		JLabel passwordLabel = new JLabel("Inserisci la password");
+		JLabel passwordLabel = new JLabel("Password:");
 		passwordLabel.setFont(new Font("Yu Gothic Medium", Font.PLAIN, 20));
 		passwordLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_passwordLabel = new GridBagConstraints();
@@ -124,14 +126,15 @@ public class ClientLoginForm extends JFrame {
 		loginButton.addActionListener(listener);
 		contentPanel.add(loginButton);
 		
-		JLabel registerField = new JLabel("Non hai ancora un account? Registrati!");
+		JLabel registerField = new JLabel("<html><u>Non hai ancora un account?  Registrati</u></html>");
+		
 		registerField.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
 		registerField.setHorizontalAlignment(SwingConstants.CENTER);
 		registerField.setBounds(143, 296, 500, 20);
 		Font font = registerField.getFont();
 		contentPanel.add(registerField);
 		
-		JLabel amministratoreField = new JLabel("Sei un amministratore? Accedi!");
+		JLabel amministratoreField = new JLabel("<html><u>Sei un amministratore?  Accedi</u></html>");
 		amministratoreField.setHorizontalAlignment(SwingConstants.CENTER);
 		amministratoreField.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
 		amministratoreField.setBounds(143, 321, 500, 20);
