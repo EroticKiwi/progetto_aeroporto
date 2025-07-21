@@ -3,6 +3,7 @@ package controller;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import view.*;
 
@@ -10,6 +11,7 @@ public class ViewController {
 
 	private static ViewController instance;
 	ArrayList<JFrame> views;
+	int activeView;
 	
 	private ViewController() {
 		views = new ArrayList<JFrame>();
@@ -34,6 +36,10 @@ public class ViewController {
 		}
 	}
 	
+	public void ShowDBError_Modal() {
+		JOptionPane.showMessageDialog(views.get(activeView), "Errore di connessione al database. Riprova più tardi", "Si è verificato un errore!", JOptionPane.INFORMATION_MESSAGE);
+	}
+	
 	// Metodi view Cliente Login
 	
 	public void ClientLogin_Activate() {
@@ -41,6 +47,7 @@ public class ViewController {
 		DisableAllViews();
 		
 		views.get(0).setVisible(true);
+		activeView = 0;
 	}
 	
 	public void ClientLogin_ShowLoginError() {
@@ -55,6 +62,7 @@ public class ViewController {
 		DisableAllViews();
 		
 		views.get(1).setVisible(true);
+		activeView = 1;
 	}
 	
 	public void ClientRegister_ShowError(String errorMessage) {
@@ -69,6 +77,7 @@ public class ViewController {
 		DisableAllViews();
 		
 		views.get(2).setVisible(true);
+		activeView = 2;
 	}
 	
 	public void AdminLogin_ShowLoginError() {

@@ -46,7 +46,7 @@ public class DataModel implements DAOGenerale{
 		return instance;
 	}
 
-	public void inserisciEntita(String query, Map<Integer, Object> params) throws InserisciException{
+	public void inserisciEntita(String query, Map<Integer, Object> params) throws InserisciException, SQLException{
 		
 		PreparedStatement statement = null;
 		try {
@@ -54,18 +54,24 @@ public class DataModel implements DAOGenerale{
 			 AssemblaStatement(statement, params);
 			 statement.execute();
 		} catch (SQLException e) {
+			System.out.println(e.getSQLState());
+			if(CheckDBException(e.getSQLState())) {
+				throw e;
+			}
 			throw new InserisciException(e.getMessage());
 		} finally {
 			try {
-				 statement.close();
+				if(statement != null){
+					 statement.close();
+				}
 			} catch(SQLException e) {
-				throw new InserisciException(e.getSQLState());
+				throw new InserisciException(e.getMessage());
 			}
 		}
 		
 	}
 
-	public void eliminaEntita(String query, Map<Integer, Object> params) throws EliminaException{
+	public void eliminaEntita(String query, Map<Integer, Object> params) throws EliminaException, SQLException{
 		
 		PreparedStatement statement = null;
 		try {
@@ -74,7 +80,9 @@ public class DataModel implements DAOGenerale{
 			 statement.execute();
 			statement.close();
 		} catch (SQLException e) {
-			System.out.println(e.getSQLState());
+			if(CheckDBException(e.getSQLState())) {
+				throw e;
+			}
 			throw new EliminaException();
 		}	finally {
 			try {
@@ -85,7 +93,7 @@ public class DataModel implements DAOGenerale{
 		}
 	}
 
-	public ResultSet trovaEntita(String query, Map<Integer, Object> params) throws TrovaException{
+	public ResultSet trovaEntita(String query, Map<Integer, Object> params) throws TrovaException, SQLException{
 		
 		PreparedStatement statement = null;
 		ResultSet rs = null;
@@ -97,7 +105,9 @@ public class DataModel implements DAOGenerale{
 			}
 			rs = statement.executeQuery();
 		} catch(SQLException e) {
-			System.out.println(e.getSQLState());
+			if(CheckDBException(e.getSQLState())) {
+				throw e;
+			}
 			throw new TrovaException();
 		}
 		
@@ -120,6 +130,39 @@ public class DataModel implements DAOGenerale{
 			// Potremmo fare un controllo per vedere se value è NULL, ma per ora non dà problemi 
 			// lasciarlo così!
 		}
+	}
+	
+	boolean CheckDBException(String sqlCode) { // true = errore del database, false = il db funziona
+		
+		if(sqlCode.equals("08001")) {
+			return true;
+		}
+		
+		if(sqlCode.equals("08006")) {
+			return true;
+		}
+		
+		if(sqlCode.equals("08003")) {
+			return true;
+		}
+		
+		if(sqlCode.equals("08004")) {
+			return true;
+		}
+		
+		if(sqlCode.equals("53300")) {
+			return true;
+		}
+		
+		if(sqlCode.equals("57P01")) {
+			return true;
+		}
+		
+		if(sqlCode.equals("3D000")) {
+			return true;
+		}
+		
+		return false;
 	}
 	
 

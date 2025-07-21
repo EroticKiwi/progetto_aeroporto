@@ -14,11 +14,15 @@ public class DBConnection {
 	public Statement statement;
 	public ResultSet rs;
 		
-	private DBConnection() {
-		Connect();
+	private DBConnection() throws SQLException {
+		try {
+			Connect();
+		} catch (SQLException e) {
+			throw e;
+		}
 	}
 	
-	public static DBConnection getInstance() {
+	public static DBConnection getInstance() throws SQLException {
 		if(instance == null) {
 			instance = new DBConnection();
 		}
@@ -26,19 +30,17 @@ public class DBConnection {
 		return instance;
 	}
 	
-	public void Connect() {
+	public void Connect() throws SQLException {
 		String url = "jdbc:postgresql://localhost:5432/aeroporto";
 		String username = "postgres";
 		String password = "1234"; // 1234
 		
 		try {
 			connection = DriverManager.getConnection(url, username, password);
-			//connection.setAutoCommit(false);
 			System.out.println("Connessione avvenuta!");
 		} catch (SQLException e) {
-			System.out.println("errore");
-			e.getMessage();
-			e.printStackTrace();
+			throw e;
+			//e.printStackTrace();
 		}
 	}
 	

@@ -15,9 +15,14 @@ public class InserisciException extends Throwable
 	
 	public InserisciException(String message) {
 		this.message = message.toLowerCase();
+		System.out.println(message);
 	}
 	
     public String getMessage() {
+    	
+    	if(message.contains("non esiste")) {
+    		return "";
+    	}
     	
     	if(message.contains("nome")) {
     		return "Il campo 'Nome' è già presente nella base dati.";

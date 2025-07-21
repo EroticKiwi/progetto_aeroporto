@@ -79,7 +79,8 @@ public class DataController {
 		} catch (InserisciException e) {
 			ViewController.getInstance().ClientRegister_ShowError(e.getMessage());
 		} catch (SQLException | TrovaException e) { /* errore nell'rs.next() o nella chiusura dello statement*/
-			// Comunica alla view che c'è stato un errore generico del database! 
+			// Comunica alla view che c'è stato un errore generico del database!
+			ViewController.getInstance().ShowDBError_Modal();
 		}
 	}
 	
@@ -118,6 +119,7 @@ public class DataController {
 			
 		} catch(SQLException | TrovaException e) {
 			// Comunica alla view che c'è stato un errore generico del DB
+			ViewController.getInstance().ShowDBError_Modal();
 		}
 	}
 	
@@ -136,8 +138,11 @@ public class DataController {
 			DataModel.getInstance().eliminaEntita(query, params);
 			System.out.println("L'utente è stato cancellato!");
 			// Prosegui con le view
-		} catch(EliminaException e) {
+		} catch(SQLException e) {
 			// Comunica alla view che c'è stato un errore generico del DB.
+			ViewController.getInstance().ShowDBError_Modal();
+		} catch(EliminaException e) {
+			
 		}
 		
 	}
@@ -172,8 +177,11 @@ public class DataController {
 			
 			System.out.println(utenteSessione.toString());
 			
-		} catch(SQLException | TrovaException e) {
+		} catch(SQLException e) {
 			// Comunica alla view che c'è stato un errore generico del DB
+			ViewController.getInstance().ShowDBError_Modal();
+		} catch(TrovaException e) {
+			
 		}
 	}
 	
@@ -196,6 +204,8 @@ public class DataController {
 		} catch(InserisciException e) {
 			System.out.println(e.getMessage());
 			// Comunica alla view che c'è stato un errore durante l'inserimento oppure esiste già un dato uguale!
+		} catch(SQLException e) {
+			ViewController.getInstance().ShowDBError_Modal();
 		}
 	}
 	
@@ -223,8 +233,11 @@ public class DataController {
 			// Prosegui con le view
 			System.out.println(aeroporto.toString());
 			
-		} catch(SQLException | TrovaException e) {
+		} catch(SQLException e) {
 			// Comunica alla view che c'è stato un errore generico del DB
+			ViewController.getInstance().ShowDBError_Modal();
+		} catch(TrovaException e) {
+			
 		}
 		
 	}
@@ -259,9 +272,11 @@ public class DataController {
 			
 			// Prosegui con le view
 						
-		} catch(SQLException | TrovaException e) {
+		} catch(SQLException e) {
 			// Comunica alla view che c'è stato un errore generico del DB
-			System.out.println(e.getMessage());
+			ViewController.getInstance().ShowDBError_Modal();
+		} catch(TrovaException e) {
+			
 		}
 	}
 	
@@ -276,8 +291,11 @@ public class DataController {
 			DataModel.getInstance().eliminaEntita(query, params);
 			System.out.println("L'aeroporto è stato cancellato!");
 			// Prosegui con le view
-		} catch(EliminaException e) {
+		} catch(SQLException e) {
 			// Comunica alla view che c'è stato un errore generico del DB
+			ViewController.getInstance().ShowDBError_Modal();
+		} catch(EliminaException e) {
+			
 		}
 		
 	}
@@ -298,9 +316,12 @@ public class DataController {
 			
 			// Prosegui con le view
 			System.out.println("L'aereo è stato inserito!");
-		} catch(InserisciException e) {
+		} catch(SQLException e) {
 			System.out.println(e.getMessage());
 			// Comunica alla view che c'è stato un errore generico del DB
+			ViewController.getInstance().ShowDBError_Modal();
+		} catch(InserisciException e) {
+			
 		}
 
 	}
@@ -335,9 +356,12 @@ public class DataController {
 			
 			// Prosegui con le view
 			System.out.println(aereo.toString());
-		} catch(SQLException | TrovaException e) {
+		} catch(SQLException e) {
 			System.out.println("ERRORE!");
 			// Comunica alla view che c'è stato un errore generico del DB
+			ViewController.getInstance().ShowDBError_Modal();
+		} catch(TrovaException e) {
+			
 		}
 	}
 	
@@ -371,9 +395,11 @@ public class DataController {
 			
 			// Prosegui con le view
 						
-		} catch(SQLException | TrovaException e) {
+		} catch(SQLException e) {
 			// Comunica alla view che c'è stato un errore generico del DB
-			System.out.println(e.getMessage());
+			ViewController.getInstance().ShowDBError_Modal();
+		} catch(TrovaException e) {
+			
 		}
 		
 	}
@@ -389,8 +415,11 @@ public class DataController {
 			DataModel.getInstance().eliminaEntita(query, params);
 			System.out.println("L'aereo è stato cancellato!");
 			// Prosegui con le view
-		} catch(EliminaException e) {
+		} catch(SQLException e) {
 			// Comunica alla view che c'è stato un errore generico del DB
+			ViewController.getInstance().ShowDBError_Modal();
+		} catch(EliminaException e) {
+			
 		}
 		
 	}
@@ -419,9 +448,12 @@ public class DataController {
 			
 			// Prosegui con le view
 			System.out.println("Il volo è stato inserito!");
-		} catch(InserisciException e) {
+		} catch(SQLException e) {
 			System.out.println(e.getMessage());
 			// Comunica alla view che c'è stato un errore generico del DB
+			ViewController.getInstance().ShowDBError_Modal();
+		} catch(InserisciException e) {
+			
 		}
 		
 	}
@@ -462,9 +494,12 @@ public class DataController {
 			
 			// Prosegui con le view
 			System.out.println(volo.toString());
-		} catch(SQLException | TrovaException e) {
+		} catch(SQLException e) {
 			System.out.println("ERRORE!");
 			// Comunica alla view che c'è stato un errore generico del DB
+			ViewController.getInstance().ShowDBError_Modal();
+		} catch(TrovaException e) {
+			
 		}
 		
 	}
@@ -514,7 +549,7 @@ public class DataController {
 						
 		} catch(SQLException | TrovaException e) {
 			// Comunica alla view che c'è stato un errore generico del DB
-			System.out.println(e.getMessage());
+			ViewController.getInstance().ShowDBError_Modal();
 		}
 		
 	}
@@ -530,8 +565,11 @@ public class DataController {
 			DataModel.getInstance().eliminaEntita(query, params);
 			System.out.println("Il volo è stato cancellato!");
 			// Prosegui con le view
-		} catch(EliminaException e) {
+		} catch(SQLException e) {
 			// Comunica alla view che c'è stato un errore generico del DB
+			ViewController.getInstance().ShowDBError_Modal();
+		} catch(EliminaException e) {
+			
 		}
 		
 	}
@@ -552,9 +590,12 @@ public class DataController {
 			
 			// Prosegui con le view
 			System.out.println("Il biglietto è stato inserito!");
-		} catch(InserisciException e) {
+		} catch(SQLException e) {
 			System.out.println(e.getMessage());
 			// Comunica alla view che c'è stato un errore generico del DB
+			ViewController.getInstance().ShowDBError_Modal();
+		} catch(InserisciException e) {
+			
 		}
 		
 	}
@@ -592,6 +633,7 @@ public class DataController {
 		} catch(SQLException | TrovaException e) {
 			System.out.println("ERRORE!");
 			// Comunica alla view che c'è stato un errore generico del DB
+			ViewController.getInstance().ShowDBError_Modal();
 		}
 		
 	}
@@ -628,7 +670,7 @@ public class DataController {
 						
 		} catch(SQLException | TrovaException e) {
 			// Comunica alla view che c'è stato un errore generico del DB
-			System.out.println(e.getMessage());
+			ViewController.getInstance().ShowDBError_Modal();
 		}
 		
 	}
