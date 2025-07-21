@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JFrame;
 
 import controller.DataController;
+import controller.ViewController;
 import view.*;
 
 public class SendUserData_Listener implements ActionListener{
@@ -45,10 +46,30 @@ public class SendUserData_Listener implements ActionListener{
 		
 		ClientRegisterForm clientRegister = (ClientRegisterForm) parent;
 		String nome = clientRegister.getNome();
+		if(nome.equals("")) {
+			ViewController.getInstance().ClientRegister_ShowError("Il campo 'Nome' non può essere vuoto!");
+			return;
+		}
 		String cognome = clientRegister.getCognome();
+		if(cognome.equals("")) {
+			ViewController.getInstance().ClientRegister_ShowError("Il campo 'Cognome' non può essere vuoto!");
+			return;
+		}
 		String email = clientRegister.getEmail();
+		if(email.equals("")) {
+			ViewController.getInstance().ClientRegister_ShowError("Il campo 'Email' non può essere vuoto!");
+			return;
+		}
 		String password = clientRegister.getPassword();
+		if(password.equals("")) {
+			ViewController.getInstance().ClientRegister_ShowError("Il campo 'Password' non può essere vuoto!");
+			return;
+		}
 		String metodoPagamento = clientRegister.getMetodoPagamento();
+		if(metodoPagamento.equals("")) {
+			ViewController.getInstance().ClientRegister_ShowError("Il campo 'Metodo di Pagamento' non può essere vuoto!");
+			return;
+		}
 		
 		DataController.getInstance().inserisciCliente(nome, cognome, email, password, metodoPagamento);
 	}
