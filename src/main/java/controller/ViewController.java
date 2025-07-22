@@ -14,7 +14,7 @@ public class ViewController {
 	ArrayList<JFrame> views; // Lista di tutte le view accessibili nel programma
 	int activeView; // View attiva al momento
 	
-	ActiveEntity_Enum activeEntity;
+	ActiveEntity_Enum activeEntity; // Enum modificato attraverso specifici metodi "View_Activate" che ci serve per definire quali entità passare quando si accede a certe view.
 	
 	private ViewController() {
 		views = new ArrayList<JFrame>();
@@ -22,8 +22,7 @@ public class ViewController {
 		views.add(new ClientRegister_View()); // views.get(1) = View della registrazione cliente
 		views.add(new AdminLogin_View()); // views.get(2) = View del login amministratore
 		// views.add(new FindEntity_View()); // views.get(3) = View della ricerca delle entità
-		// views.add(new InsertEntity_View()); // views.get(4) = View dell'inserimento delle entità
-		// views.add(new EntityDetails_View()); // views.get(5) = View dei dettagli dell'entità (e del cliente per l'eventuale cancellamento!)
+		// views.add(new EntityDetails_View()); // views.get(4) = View dei dettagli dell'entità e per l'inserimento dell'entità (e per la cancellazione delle entità)
 	}
 	
 	public static ViewController getInstance() {
@@ -42,6 +41,11 @@ public class ViewController {
 		}
 		
 		return views.get(view);
+	}
+	
+	public void ActivateView(int viewToActivate) {
+		activeView = viewToActivate;
+		views.get(viewToActivate).setVisible(true);
 	}
 	
 	void DisableAllViews() { // Spegniamo tutte le view prima di attivarne una in particolare
@@ -69,8 +73,7 @@ public class ViewController {
 		
 		DisableAllViews();
 		
-		views.get(0).setVisible(true);
-		activeView = 0;
+		ActivateView(0);
 	}
 	
 	public void ClientLogin_ShowLoginError() {
@@ -84,8 +87,7 @@ public class ViewController {
 		
 		DisableAllViews();
 		
-		views.get(1).setVisible(true);
-		activeView = 1;
+		ActivateView(1);
 	}
 	
 	public void ClientRegister_ShowError(String errorMessage) {
@@ -99,8 +101,7 @@ public class ViewController {
 		
 		DisableAllViews();
 		
-		views.get(2).setVisible(true);
-		activeView = 2;
+		ActivateView(2);
 	}
 	
 	public void AdminLogin_ShowLoginError() {
@@ -115,9 +116,10 @@ public class ViewController {
 		DisableAllViews();
 		
 		SetActiveEntity_Enum(activeEntity);
-		activeView = 3;
-		/*
-		 FindEntity_View findEntity_View = (FindEntity_View) views.get(3);
+
+		//FindEntity_View findEntity_View = (FindEntity_View) views.get(3);
+		
+		DataController.getInstance().clearEntities(); // Puliamo per sicurezza, anche se la lista viene pulita nel medesimo modo all'interno dei vari metodi
 		
 		switch(activeEntity) {
 			case ActiveEntity_Enum.Aereo:
@@ -132,12 +134,42 @@ public class ViewController {
 			case ActiveEntity_Enum.Biglietto:
 				DataController.getInstance().trovaTuttiBiglietti();
 				break;
-			case Default:
-				DataController.getInstance().clearEntities;
-				break;
 		}
 		
-		 findEntity_View.SetEntityList(DataController.getInstance().getEntities());
-		 */
+		 // findEntity_View.SetEntityList(DataController.getInstance().getEntities());
+		
+		ActivateView(3);
+	}
+	
+	// Metodi view EntityDetails_View
+	
+	public void EntityDetailsView_Activate(ActiveEntity_Enum activeEntity, int id) {
+		
+		DisableAllViews();
+		
+		SetActiveEntity_Enum(activeEntity);
+		
+		// EntityDetails_View entityDetails_view = (EntityDetails_View) views.get(4);
+		
+		DataController.getInstance().clearEntities(); // Puliamo per sicurezza, anche se la lista viene pulita nel medesimo modo all'interno dei vari metodi
+		
+		switch(activeEntity) {
+		case ActiveEntity_Enum.Aereo:
+			DataController.getInstance().trovaAereo(id);
+			break;
+		case ActiveEntity_Enum.Aeroporto:
+			DataController.getInstance().trovaAeroporto(id);
+			break;
+		case ActiveEntity_Enum.Volo:
+			DataController.getInstance().trovaVolo(id);
+			break;
+		case ActiveEntity_Enum.Biglietto:
+			DataController.getInstance().trovaBiglietto(id);
+			break;
+	}
+		
+		// EntityDetails_View entityDetails_view.SetEntityData(DataController.getInstance().getEntities().get(0));
+		
+		ActivateView(4);
 	}
 }
