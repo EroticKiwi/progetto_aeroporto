@@ -1,42 +1,13 @@
 package view;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.border.EmptyBorder;
+import javax.swing.*;
+import java.awt.*;
 
 import listeners.SendUserData_Listener;
 import listeners.goTo.GoToAdminLogin_Listener;
 import listeners.goTo.GoToClientLogin_Listener;
 import listeners.goTo.GoToClientRegister_Listener;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-
-import javax.swing.JLabel;
-import java.awt.Font;
-import java.awt.SystemColor;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.Image;
-
-import javax.swing.SwingConstants;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import net.miginfocom.swing.MigLayout;
-import java.awt.BorderLayout;
-import javax.swing.JTextField;
-import java.awt.Window.Type;
-import java.awt.font.TextAttribute;
-import java.util.Map;
-
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 
 public class ClientLoginForm extends JFrame {
 
