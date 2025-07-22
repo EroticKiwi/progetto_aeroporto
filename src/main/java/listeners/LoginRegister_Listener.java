@@ -9,25 +9,25 @@ import controller.DataController;
 import controller.ViewController;
 import view.*;
 
-public class SendUserData_Listener implements ActionListener{
+public class LoginRegister_Listener implements ActionListener{
 	
 	JFrame parent; // Può essere sia Login/Registrazione Cliente che Login Amministratore
 	
-	public SendUserData_Listener(JFrame parent) {
+	public LoginRegister_Listener(JFrame parent) {
 		this.parent = parent;
 	}
 	
 	public void actionPerformed(ActionEvent e) {
 		
-		if(parent instanceof ClientLoginForm) { // Se questo listener viene dalla pagina login dell'utente
+		if(parent instanceof ClientLogin_View) { // Se questo listener viene dalla pagina login dell'utente
 			SendClientLoginData();
 		}
 		
-		if(parent instanceof ClientRegisterForm) {
+		if(parent instanceof ClientRegister_View) {
 			SendClientRegisterData();
 		}
 		
-		if(parent instanceof AdminLoginForm) {
+		if(parent instanceof AdminLogin_View) {
 			SendAdminLoginData();
 		}
 		
@@ -35,7 +35,7 @@ public class SendUserData_Listener implements ActionListener{
 	
 	void SendClientLoginData() { // Mandiamo i dati relativi al login dell'utente
 		
-		ClientLoginForm clientLogin = (ClientLoginForm) parent;
+		ClientLogin_View clientLogin = (ClientLogin_View) parent;
 		String email = clientLogin.getEmail();
 		String password = clientLogin.getPassword();
 		
@@ -44,7 +44,7 @@ public class SendUserData_Listener implements ActionListener{
 	
 	void SendClientRegisterData() { // Mandiamo i dati relativi alla registrazione dell'utente
 		
-		ClientRegisterForm clientRegister = (ClientRegisterForm) parent;
+		ClientRegister_View clientRegister = (ClientRegister_View) parent;
 		String nome = clientRegister.getNome();
 		if(nome.equals("")) {
 			ViewController.getInstance().ClientRegister_ShowError("Il campo 'Nome' non può essere vuoto!");
@@ -76,7 +76,7 @@ public class SendUserData_Listener implements ActionListener{
 
 	void SendAdminLoginData() { // Mandiamo i dati relativi al login dell'amministratore
 		
-		AdminLoginForm adminLoginForm = (AdminLoginForm) parent;
+		AdminLogin_View adminLoginForm = (AdminLogin_View) parent;
 		String email = adminLoginForm.getEmail();
 		String password = adminLoginForm.getPassword();
 		int chiaveAccesso = 0;

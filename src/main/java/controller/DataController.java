@@ -28,6 +28,16 @@ public class DataController {
 		
 		return instance;
 	}
+	
+	// Metodi Utility
+	
+	public ArrayList<Object> getEntities(){
+		return entitaObjs;
+	}
+	
+	public void clearEntities(){
+		entitaObjs.clear();
+	}
 
 	// Metodi Cliente
 	
@@ -54,7 +64,7 @@ public class DataController {
 			
 			query = "SELECT id FROM Cliente WHERE email = ? AND password = ?";
 			
-			params.clear();
+			clearEntities();
 			params.put(1, email);
 			params.put(2, password);
 			
@@ -424,6 +434,34 @@ public class DataController {
 		
 	}
 	
+	public int getCapienzaAereo(int id) {
+		
+		String query = "GET capienza FROM Aereo WHERE id = ?";
+		Map<Integer, Object> params = new HashMap<Integer, Object>();
+		
+		params.put(1, id);
+		
+		try {
+			ResultSet rs = DataModel.getInstance().trovaEntita(query, params);
+			
+			if(!rs.next()) {
+				rs.getStatement().close();
+				return 0; // è impossibile che non trovi l'aereo, quindi questo caso non dovrebbe MAI verificarsi. Questo perchè i dati dell'aereo vengono inseriti dalla View dopo aver trovato tutti gli aerei presenti nel database.
+			}
+			
+			int capienza = rs.getInt("capienza");
+			rs.getStatement().close();
+			
+			return capienza;
+		} catch(SQLException e) {
+			ViewController.getInstance().ShowDBError_Modal();
+		} catch(TrovaException e) {
+			
+		}
+		
+		return 0;
+	}
+	
 	// Metodi Volo
 	
 	public void inserisciVolo(float prezzo, int id_aeroporto_partenza, int id_aeroporto_arrivo, String orario_partenza, String orario_arrivo, int id_aereo, int posti_liberi, boolean valido) {
@@ -506,7 +544,7 @@ public class DataController {
 	
 	public void trovaTuttiVoli() {
 		
-		String query = "SELECT * FROM Volo";
+		String query = "SELECT * FROM Volo WHERE valido = true"; // Mostriamo solo i voli validi
 		
 		entitaObjs.clear();
 		
@@ -572,6 +610,40 @@ public class DataController {
 			
 		}
 		
+	}
+	
+	public String getNomeVolo(int id_partenza, int id_arrivo) {
+		
+		String query = "SELECT Citta FROM AEROPORTO WHERE id = ? OR id = ?";
+		Map<Integer, Object> params = new HashMap<Integer, Object>();
+		
+		params.put(1, id_partenza);
+		params.put(2, id_arrivo);
+		
+		try {
+			
+			ResultSet rs = DataModel.getInstance().trovaEntita(query, params);
+			
+			if(!rs.next()) {
+				return ""; // Non dovremmo mai avere questo errore, dato che gli aeroporti ESISTERANNO PER FORZA. Nella view li sceglieremo a seguito di una chiamata al DB di tipo "trovaEntita()"
+			}
+			
+			// Dobbiamo tornare al primo elemento del result set.
+			rs.beforeFirst();
+			
+			String nome = rs.getString("citta");
+			rs.next();
+			nome += " - " + rs.getString("citta");
+			
+			return nome;
+			
+		} catch(SQLException e) {
+			ViewController.getInstance().ShowDBError_Modal();
+		} catch(TrovaException e) {
+			
+		}
+		
+		return ""; // Può ritornare "" solo a seguito di un errore vero e proprio del DB.
 	}
 	
 	// Metodi Biglietto
@@ -640,12 +712,15 @@ public class DataController {
 	
 	public void trovaTuttiBiglietti() {
 		
-		String query = "SELECT * FROM Bigietti";
+		String query = "SELECT * FROM Bigietti WHERE id_cliente = ?";
+		Map<Integer, Object> params = new HashMap<Integer, Object>();
+		
+		params.put(1, utenteSessione.getId());
 		
 		entitaObjs.clear();
 		
 		try {
-			ResultSet rs = DataModel.getInstance().trovaEntita(query, null);
+			ResultSet rs = DataModel.getInstance().trovaEntita(query, params);
 			
 			if(!rs.next()) {
 				// Dici alla view che nessun biglietto è stato trovato!

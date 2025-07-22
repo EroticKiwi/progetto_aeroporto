@@ -4,13 +4,13 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 
-import listeners.SendUserData_Listener;
+import listeners.LoginRegister_Listener;
 import listeners.goTo.GoToAdminLogin_Listener;
 import listeners.goTo.GoToClientLogin_Listener;
 import listeners.goTo.GoToClientRegister_Listener;
 
 
-public class AdminLoginForm extends JFrame {
+public class AdminLogin_View extends JFrame {
 
 	// --- Dichiarazione dei Componenti (variabili membro) ---
     // Questi JPanel saranno i contenitori principali del nostro layout
@@ -38,7 +38,7 @@ public class AdminLoginForm extends JFrame {
     private JButton loginButton;	// Il bottone "Avanti"
 
     // --- Costruttore della Finestra Principale ---
-    public AdminLoginForm() {
+    public AdminLogin_View() {
         // --- MODIFICHE PER LA FINESTRA PRINCIPALE (Configurazione della finestra principale) ---
         super("Login Amministratore - Aeroporto"); // Imposta il titolo della finestra
         this.setSize(1000, 500); // Imposta le dimensioni della finestra (larghezza, altezza)
@@ -275,7 +275,7 @@ public class AdminLoginForm extends JFrame {
         gbc.weightx = 0.0;
         gbc.insets = new Insets(10, 0, 12, 0);
         
-        SendUserData_Listener sendData = new SendUserData_Listener(this);
+        LoginRegister_Listener sendData = new LoginRegister_Listener(this);
         loginButton.addActionListener(sendData);
         
         centerContainer.add(loginButton, gbc);
