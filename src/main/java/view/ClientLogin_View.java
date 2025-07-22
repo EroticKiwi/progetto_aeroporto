@@ -30,26 +30,13 @@ public class ClientLogin_View extends JFrame {
 
     private JButton loginButton;	
 
-<<<<<<< Updated upstream:src/main/java/view/ClientLogin_View.java
-    // --- Costruttore della Finestra Principale ---
     public ClientLogin_View() {
-        // --- MODIFICHE PER LA FINESTRA PRINCIPALE (Configurazione della finestra principale) ---
-        super("Login Cliente - Aeroporto"); // Imposta il titolo della finestra
-        this.setSize(900, 500); // Imposta le dimensioni della finestra (larghezza, altezza)
-        this.setLocationRelativeTo(null); // Centra la finestra sullo schermo
-        this.setResizable(false); // Impedisce all'utente di ridimensionare la finestra
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // (cliccando X), termina il programma
-        //this.getContentPane().setBackground(Color.BLACK); // Imposta il colore di sfondo del Content Pane a nero
-        this.getContentPane().setLayout(new BorderLayout()); // 5 regioni (Nord, Sud, Est, Ovest, Centro)
-=======
-    public ClientLoginForm() {
         super("Login Cliente - Aeroporto"); 
         this.setSize(900, 500); 
         this.setLocationRelativeTo(null); 
         this.setResizable(false); 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-        this.getContentPane().setLayout(new BorderLayout()); 
->>>>>>> Stashed changes:src/main/java/view/ClientLoginForm.java
+        this.getContentPane().setLayout(new BorderLayout());
       
 
         ovestContainer = new JPanel(); 

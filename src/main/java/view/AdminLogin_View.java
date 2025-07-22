@@ -34,18 +34,7 @@ public class AdminLogin_View extends JFrame {
     private JButton loginButton;	// Il bottone "Avanti"
 
     // --- Costruttore della Finestra Principale ---
-<<<<<<< Updated upstream:src/main/java/view/AdminLogin_View.java
     public AdminLogin_View() {
-        // --- MODIFICHE PER LA FINESTRA PRINCIPALE (Configurazione della finestra principale) ---
-        super("Login Amministratore - Aeroporto"); // Imposta il titolo della finestra
-        this.setSize(1000, 500); // Imposta le dimensioni della finestra (larghezza, altezza)
-        this.setLocationRelativeTo(null); // Centra la finestra sullo schermo
-        this.setResizable(false); // Impedisce all'utente di ridimensionare la finestra
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // (cliccando X), termina il programma
-        //this.getContentPane().setBackground(Color.BLACK); // Imposta il colore di sfondo del Content Pane a nero
-        this.getContentPane().setLayout(new BorderLayout()); // 5 regioni (Nord, Sud, Est, Ovest, Centro)
-=======
-    public AdminLoginForm() {
         // --- Configurazione della finestra principale ---
         super("Login Amministratore - Aeroporto"); // Impostiamo il titolo della finestra
         this.setSize(1000, 500); // Impostiamo le dimensioni della finestra (larghezza, altezza)
@@ -53,7 +42,7 @@ public class AdminLogin_View extends JFrame {
         this.setResizable(false); // Impediamo all'utente di ridimensionare la finestra
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // (cliccando X), terminiamo il programma
         this.getContentPane().setLayout(new BorderLayout()); // Impostiamo il layout manager del content pane a BorderLayout (5 regioni: Nord, Sud, Est, Ovest, Centro)
->>>>>>> Stashed changes:src/main/java/view/AdminLoginForm.java
+
       
 
         // --- JPanel OVEST (La barra laterale sinistra) ---
@@ -299,9 +288,7 @@ public class AdminLogin_View extends JFrame {
         centerContainer.add(goToAdminLabel, gbc);
         
         
-<<<<<<< Updated upstream:src/main/java/view/AdminLogin_View.java
         LoginRegister_Listener sendData = new LoginRegister_Listener(this);
-=======
         
         // --- JButton "Accedi" (Bottone per inviare i dati di login) ---
         loginButton = new JButton("Accedi");
@@ -318,8 +305,6 @@ public class AdminLogin_View extends JFrame {
         gbc.insets = new Insets(10, 0, 12, 0); // Spazio interno specifico per il bottone
 
         // Associamo un listener per l'azione del bottone per inviare i dati dell'utente
-        SendUserData_Listener sendData = new SendUserData_Listener(this);
->>>>>>> Stashed changes:src/main/java/view/AdminLoginForm.java
         loginButton.addActionListener(sendData);
         centerContainer.add(loginButton, gbc);
         

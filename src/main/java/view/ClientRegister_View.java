@@ -35,26 +35,13 @@ public class ClientRegister_View extends JFrame {
 
     private JButton loginButton;
 
-<<<<<<< Updated upstream:src/main/java/view/ClientRegister_View.java
-    // --- Costruttore della Finestra Principale ---
     public ClientRegister_View() {
-        // --- MODIFICHE PER LA FINESTRA PRINCIPALE (Configurazione della finestra principale) ---
-        super("Registrazione Cliente - Aeroporto"); // Imposta il titolo della finestra
-        this.setSize(1100,700); // Imposta le dimensioni della finestra (larghezza, altezza)
-        this.setLocationRelativeTo(null); // Centra la finestra sullo schermo
-        this.setResizable(false); // Impedisce all'utente di ridimensionare la finestra
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // (cliccando X), termina il programma
-        //this.getContentPane().setBackground(Color.BLACK); // Imposta il colore di sfondo del Content Pane a nero
-        this.getContentPane().setLayout(new BorderLayout()); // 5 regioni (Nord, Sud, Est, Ovest, Centro)
-=======
-    public ClientRegisterForm() {
         super("Registrazione Cliente - Aeroporto");
         this.setSize(1100,700);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.getContentPane().setLayout(new BorderLayout());
->>>>>>> Stashed changes:src/main/java/view/ClientRegisterForm.java
       
 
         ovestContainer = new JPanel();
