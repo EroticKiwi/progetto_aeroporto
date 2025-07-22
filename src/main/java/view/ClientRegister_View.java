@@ -10,35 +10,32 @@ import listeners.goTo.GoToClientLogin_Listener;
 
 public class ClientRegister_View extends JFrame {
 
-	// --- Dichiarazione dei Componenti (variabili membro) ---
-    // Questi JPanel saranno i contenitori principali del nostro layout
-    private JPanel ovestContainer;    // Pannello per la sezione sinistra
-    private JPanel centerContainer;    // Pannello centrale 
+    private JPanel ovestContainer;
+    private JPanel centerContainer;
 
-    private JLabel registerTitleLabel;    // Label per il testo in grande "Accedi"
-    private JLabel accountinfoLabel;    // Label per "Utilizza il tuo account"
+    private JLabel registerTitleLabel;
+    private JLabel accountinfoLabel;
 
     private JLabel nomeLabel;
     private JLabel cognomeLabel;
-    private JLabel emailLabel; // Etichetta per il campo emailLabel
-    private JLabel passwordLabel; // Etichetta per il campo passwordLabel
-    private JLabel metodoPagamentoLabel; // Etichetta per il campo metodoPagamento
+    private JLabel emailLabel;
+    private JLabel passwordLabel;
+    private JLabel metodoPagamentoLabel;
 
-    // Campi di testo per l'input utente
     private JTextField nomeField;
     private JTextField cognomeField;
-    private JTextField emailField;      // Campo per l'email
-    private JPasswordField passwordField; // Campo per la password
-    private JTextField metodoPagamentoField; // Campo per la chiave d'accesso
+    private JTextField emailField;
+    private JPasswordField passwordField;
+    private JTextField metodoPagamentoField;
     
-    private JLabel registerErrorField; // Etichetta per l'errore di login
+    private JLabel registerErrorField;
 
-    // Label interattive ai click del mouse
     private JLabel goToRegisterLabel;
-    private JLabel goToAdminLabel; 
+    private JLabel goToAdminLabel;
 
-    private JButton loginButton;	// Il bottone "Avanti"
+    private JButton loginButton;
 
+<<<<<<< Updated upstream:src/main/java/view/ClientRegister_View.java
     // --- Costruttore della Finestra Principale ---
     public ClientRegister_View() {
         // --- MODIFICHE PER LA FINESTRA PRINCIPALE (Configurazione della finestra principale) ---
@@ -49,117 +46,101 @@ public class ClientRegister_View extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // (cliccando X), termina il programma
         //this.getContentPane().setBackground(Color.BLACK); // Imposta il colore di sfondo del Content Pane a nero
         this.getContentPane().setLayout(new BorderLayout()); // 5 regioni (Nord, Sud, Est, Ovest, Centro)
+=======
+    public ClientRegisterForm() {
+        super("Registrazione Cliente - Aeroporto");
+        this.setSize(1100,700);
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.getContentPane().setLayout(new BorderLayout());
+>>>>>>> Stashed changes:src/main/java/view/ClientRegisterForm.java
       
 
-        // --- JPanel OVEST (La barra laterale sinistra con "Accedi") ---
-        ovestContainer = new JPanel(); // Inizializza il pannello OVEST
-        // Imposta BoxLayout verticale (componenti uno sotto l'altro)
+        ovestContainer = new JPanel();
         ovestContainer.setLayout(new BoxLayout(ovestContainer, BoxLayout.Y_AXIS));
-        ovestContainer.setBackground(new Color(230, 230, 230)); // Imposta un colore di sfondo grigio chiaro
-        ovestContainer.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30)); // Aggiunge un margine di 30px
+        ovestContainer.setBackground(new Color(230, 230, 230));
+        ovestContainer.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 
 
-        // --- Caricamento e ridimensionamento dell'immagine dell'elefante ---
         try {
-            // Carica l'immagine dal percorso relativo.
-            ImageIcon iconaOriginale = new ImageIcon(getClass().getResource("/icons/add-user.png")); //
+            ImageIcon iconaOriginale = new ImageIcon(getClass().getResource("/icons/add-user.png"));
 
-            // Ottieni l'oggetto Image dall'ImageIcon
-            Image immagineOriginale = iconaOriginale.getImage(); //
+            Image immagineOriginale = iconaOriginale.getImage();
 
-            // Definisci le nuove dimensioni desiderate per l'immagine
             int nuovaLarghezza = 100;
             int nuovaAltezza = 100;
 
-            // Ridimensiona l'immagine usando RenderingHints per una migliore qualità (SCALE_SMOOTH)
-            Image immagineRidimensionata = immagineOriginale.getScaledInstance(nuovaLarghezza, nuovaAltezza, Image.SCALE_SMOOTH); //
+            Image immagineRidimensionata = immagineOriginale.getScaledInstance(nuovaLarghezza, nuovaAltezza, Image.SCALE_SMOOTH);
 
-            // Crea un nuovo ImageIcon con l'immagine ridimensionata
-            ImageIcon iconaRidimensionata = new ImageIcon(immagineRidimensionata); //
+            ImageIcon iconaRidimensionata = new ImageIcon(immagineRidimensionata);
 
-            // Crea la JLabel per l'immagine ridimensionata
-            JLabel imageLabel = new JLabel(iconaRidimensionata); //
-            imageLabel.setAlignmentX(Component.LEFT_ALIGNMENT); // Allinea a sinistra
+            JLabel imageLabel = new JLabel(iconaRidimensionata);
+            imageLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-            // Aggiungi un po' di spazio sopra l'immagine
-            ovestContainer.add(Box.createVerticalStrut(3)); //
-            // Aggiungi la label dell'immagine al pannello OVEST
-            ovestContainer.add(imageLabel); //
+            ovestContainer.add(Box.createVerticalStrut(3));
+            ovestContainer.add(imageLabel);
 
         } catch (Exception e) {
-            // In caso di errore nel caricamento dell'immagine, stampa lo stack trace.
-            e.printStackTrace(); //
-            System.err.println("Errore nel caricamento dell'immagine: " + e.getMessage()); //
+            e.printStackTrace();
+            System.err.println("Errore nel caricamento dell'immagine: " + e.getMessage());
         }
-        // --- FINE AGGIUNTA IMMAGINE ---
 
 
-
-        // --- Testo "Accedi" ---
         registerTitleLabel = new JLabel("Registrati");
         registerTitleLabel.setFont(new Font("Segoe UI", Font.BOLD, 40));
         registerTitleLabel.setForeground(new Color(51, 103, 153));
         registerTitleLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         ovestContainer.add(registerTitleLabel);
-        ovestContainer.add(Box.createVerticalStrut(20)); // Aggiunge uno spazio verticale vuoto di 20 pixel sotto la label
+        ovestContainer.add(Box.createVerticalStrut(20));
 
         
 
-        // --- Testo "Registra un nuovo account cliente" ---
         accountinfoLabel = new JLabel("Registra un nuovo account cliente");
         accountinfoLabel.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         accountinfoLabel.setForeground(new Color(95, 99, 104));
         accountinfoLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        ovestContainer.add(accountinfoLabel);    // Aggiungiamo questo componente al ovestContainer
+        ovestContainer.add(accountinfoLabel);
 
 
-
-        // --- JPanel centerContainer (Il box scuro contenente i campi emailLabel,passwordLabel ecc...) ---
-        centerContainer = new JPanel(new GridBagLayout()); // Inizializza il pannello e imposta GridBagLayout
-        centerContainer.setBackground(new Color(40, 44, 52)); // Imposta il colore di sfondo del box, un grigio scuro
-        // Aggiunge un bordo vuoto attorno ai campi (Top, Left, Bottom, Right)
+        centerContainer = new JPanel(new GridBagLayout());
+        centerContainer.setBackground(new Color(40, 44, 52));
         centerContainer.setBorder(BorderFactory.createEmptyBorder(60, 30, 20, 30));
 
-        // --- Configurazione per GridBagLayout (GridBagConstraints) ---
-        GridBagConstraints gbc = new GridBagConstraints(); // Crea un oggetto per definire le regole di posizionamento
-        // I margini (insets) predefiniti per i campi e le label
-        gbc.insets = new Insets(12, 0, 12, 0); // Spazio interno: top, left, bottom, right.
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(12, 0, 12, 0);
 
         
         
-        // --- Inizializzazione delle nuove JLabel per "emailLabel:" e "passwordLabel:" ---
-        nomeLabel = new JLabel("Nome:"); // Dichiarata come variabile membro
-        nomeLabel.setForeground(Color.WHITE); // Colore del testo bianco per leggibilità
-        nomeLabel.setFont(new Font("Segoe UI", Font.BOLD, 16)); // Font a tua scelta
+        nomeLabel = new JLabel("Nome:");
+        nomeLabel.setForeground(Color.WHITE);
+        nomeLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
         
-        cognomeLabel = new JLabel("Cognome:"); // Dichiarata come variabile membro
-        cognomeLabel.setForeground(Color.WHITE); // Colore del testo bianco per leggibilità
-        cognomeLabel.setFont(new Font("Segoe UI", Font.BOLD, 16)); // Font a tua scelta
+        cognomeLabel = new JLabel("Cognome:");
+        cognomeLabel.setForeground(Color.WHITE);
+        cognomeLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
         
-        emailLabel = new JLabel("Email:"); // Dichiarata come variabile membro
-        emailLabel.setForeground(Color.WHITE); // Colore del testo bianco per leggibilità
-        emailLabel.setFont(new Font("Segoe UI", Font.BOLD, 16)); // Font a tua scelta
+        emailLabel = new JLabel("Email:");
+        emailLabel.setForeground(Color.WHITE);
+        emailLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
 
-        passwordLabel = new JLabel("Password:"); // Dichiarata come variabile membro
-        passwordLabel.setForeground(Color.WHITE); // Colore del testo bianco
-        passwordLabel.setFont(new Font("Segoe UI", Font.BOLD, 16)); // Impostiamo il font
+        passwordLabel = new JLabel("Password:");
+        passwordLabel.setForeground(Color.WHITE);
+        passwordLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
         
         metodoPagamentoLabel = new JLabel("Metodo di Pagamento: ");
-        metodoPagamentoLabel.setForeground(Color.WHITE); // Colore del testo bianco
-        metodoPagamentoLabel.setFont(new Font("Segoe UI", Font.BOLD, 16)); // Impostiamo il font
+        metodoPagamentoLabel.setForeground(Color.WHITE);
+        metodoPagamentoLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
 
 
-        // --- Campo emailLabel e relativa JLabel ---
-        // Posizionamento della JLabel "emailLabel:" (Colonna 0, Riga 0)
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.anchor = GridBagConstraints.CENTER; // Allinea a sinistra nella cella
-        gbc.fill = GridBagConstraints.NONE; // La label non si espande per riempire la cella
-        gbc.weightx = 0.0; // Non assegnare peso a questa colonna, non si espanderà
-        gbc.insets = new Insets(12, 0, 12, 10); // Spazio interno: top, left, bottom, right.
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.weightx = 0.0;
+        gbc.insets = new Insets(12, 0, 12, 10);
         centerContainer.add(nomeLabel, gbc);
 
-        // Posizionamento del JTextField per l'emailLabel (Colonna 1, Riga 0)
         nomeField = new JTextField();
         nomeField.setText("");
         nomeField.setPreferredSize(new Dimension(350, 45));
@@ -172,25 +153,22 @@ public class ClientRegister_View extends JFrame {
             BorderFactory.createEmptyBorder(5, 10, 5, 10)
         ));
 
-        gbc.gridx = 1; // Colonna 1 (accanto alla label)
-        gbc.gridy = 0; // Riga 0 (stessa riga della label)
-        gbc.anchor = GridBagConstraints.CENTER; // Allinea a sinistra nella cella
-        gbc.fill = GridBagConstraints.HORIZONTAL; // Il campo di testo si espande orizzontalmente
-        gbc.weightx = 1.0; // Assegna peso a questa colonna, si espanderà
-        gbc.insets = new Insets(12, 0, 12, 0); // Spazio interno: top, left, bottom, right.
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
+        gbc.insets = new Insets(12, 0, 12, 0);
         centerContainer.add(nomeField, gbc);
 
-        // --- Campo passwordLabel e relativa JLabel ---
-        // Posizionamento della JLabel "passwordLabel:" (Colonna 0, Riga 1)
         gbc.gridx = 0;
         gbc.gridy = 1;
-        gbc.anchor = GridBagConstraints.CENTER; // Allinea a sinistra nella cella
-        gbc.fill = GridBagConstraints.NONE; // La label non si espande
-        gbc.weightx = 0.0; // Nessun peso
-        gbc.insets = new Insets(12, 0, 12, 10); // Spazio interno: top, left, bottom, right.
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.weightx = 0.0;
+        gbc.insets = new Insets(12, 0, 12, 10);
         centerContainer.add(cognomeLabel, gbc);
 
-        // Posizionamento del JPasswordField (Colonna 1, Riga 1)
         cognomeField = new JTextField(20);
         cognomeField.setText("");
         cognomeField.setPreferredSize(new Dimension(350, 45));
@@ -203,24 +181,22 @@ public class ClientRegister_View extends JFrame {
             BorderFactory.createEmptyBorder(5, 10, 5, 10)
         ));
 
-        gbc.gridx = 1; // Colonna 1
-        gbc.gridy = 1; // Riga 1 (stessa riga della label passwordLabel)
-        gbc.anchor = GridBagConstraints.WEST; // Allinea a sinistra nella cella
-        gbc.fill = GridBagConstraints.HORIZONTAL; // Il campo si espande orizzontalmente
-        gbc.weightx = 1.0; // Assegna peso a questa colonna
-        gbc.insets = new Insets(12, 0, 12, 0); // Spazio interno: top, left, bottom, right.
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
+        gbc.insets = new Insets(12, 0, 12, 0);
         centerContainer.add(cognomeField, gbc);
         
-        // Posizionamento del ChiaveAccessoLabel (Colonna 0, Riga 2)
         gbc.gridx = 0;
         gbc.gridy = 2;
-        gbc.anchor = GridBagConstraints.CENTER; // Allinea a sinistra nella cella
-        gbc.fill = GridBagConstraints.NONE; // La label non si espande per riempire la cella
-        gbc.weightx = 0.0; // Non assegnare peso a questa colonna, non si espanderà
-        gbc.insets = new Insets(12, 0, 12, 10); // Spazio interno: top, left, bottom, right.
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.weightx = 0.0;
+        gbc.insets = new Insets(12, 0, 12, 10);
         centerContainer.add(emailLabel, gbc);
         
-        // Posizionamento del ChiaveAccessoField (Colonna 1, Riga 2)
         emailField = new JTextField(3);
         emailField.setText("");
         emailField.setPreferredSize(new Dimension(350, 45));
@@ -233,26 +209,24 @@ public class ClientRegister_View extends JFrame {
             BorderFactory.createEmptyBorder(5, 10, 5, 10)
         ));
         
-        gbc.gridx = 1; // Colonna 1
-        gbc.gridy = 2; // Riga 1 (stessa riga della label passwordLabel)
-        gbc.anchor = GridBagConstraints.WEST; // Allinea a sinistra nella cella
-        gbc.fill = GridBagConstraints.HORIZONTAL; // Il campo si espande orizzontalmente
-        gbc.weightx = 1.0; // Assegna peso a questa colonna
-        gbc.insets = new Insets(12, 0, 12, 0); // Spazio interno: top, left, bottom, right.
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
+        gbc.insets = new Insets(12, 0, 12, 0);
         centerContainer.add(emailField, gbc);
         
         ///////////
         
-        // Posizionamento del ChiaveAccessoLabel (Colonna 0, Riga 2)
         gbc.gridx = 0;
         gbc.gridy = 3;
-        gbc.anchor = GridBagConstraints.CENTER; // Allinea a sinistra nella cella
-        gbc.fill = GridBagConstraints.NONE; // La label non si espande per riempire la cella
-        gbc.weightx = 0.0; // Non assegnare peso a questa colonna, non si espanderà
-        gbc.insets = new Insets(12, 0, 12, 10); // Spazio interno: top, left, bottom, right.
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.weightx = 0.0;
+        gbc.insets = new Insets(12, 0, 12, 10);
         centerContainer.add(passwordLabel, gbc);
         
-        // Posizionamento del ChiaveAccessoField (Colonna 1, Riga 2)
         passwordField = new JPasswordField(20);
         passwordField.setText("");
         passwordField.setPreferredSize(new Dimension(350, 45));
@@ -265,26 +239,24 @@ public class ClientRegister_View extends JFrame {
             BorderFactory.createEmptyBorder(5, 10, 5, 10)
         ));
         
-        gbc.gridx = 1; // Colonna 1
-        gbc.gridy = 3; // Riga 1 (stessa riga della label passwordLabel)
-        gbc.anchor = GridBagConstraints.WEST; // Allinea a sinistra nella cella
-        gbc.fill = GridBagConstraints.HORIZONTAL; // Il campo si espande orizzontalmente
-        gbc.weightx = 1.0; // Assegna peso a questa colonna
-        gbc.insets = new Insets(12, 0, 12, 0); // Spazio interno: top, left, bottom, right.
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
+        gbc.insets = new Insets(12, 0, 12, 0);
         centerContainer.add(passwordField, gbc);
         
         ///////
         
-        // Posizionamento del ChiaveAccessoLabel (Colonna 0, Riga 2)
         gbc.gridx = 0;
         gbc.gridy = 4;
-        gbc.anchor = GridBagConstraints.CENTER; // Allinea a sinistra nella cella
-        gbc.fill = GridBagConstraints.NONE; // La label non si espande per riempire la cella
-        gbc.weightx = 0.0; // Non assegnare peso a questa colonna, non si espanderà
-        gbc.insets = new Insets(12, 0, 12, 10); // Spazio interno: top, left, bottom, right.
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.weightx = 0.0;
+        gbc.insets = new Insets(12, 0, 12, 10);
         centerContainer.add(metodoPagamentoLabel, gbc);
         
-        // Posizionamento del ChiaveAccessoField (Colonna 1, Riga 2)
         metodoPagamentoField = new JPasswordField(20);
         metodoPagamentoField.setText("");
         metodoPagamentoField.setPreferredSize(new Dimension(350, 45));
@@ -297,36 +269,34 @@ public class ClientRegister_View extends JFrame {
             BorderFactory.createEmptyBorder(5, 10, 5, 10)
         ));
         
-        gbc.gridx = 1; // Colonna 1
-        gbc.gridy = 4; // Riga 1 (stessa riga della label passwordLabel)
-        gbc.anchor = GridBagConstraints.WEST; // Allinea a sinistra nella cella
-        gbc.fill = GridBagConstraints.HORIZONTAL; // Il campo si espande orizzontalmente
-        gbc.weightx = 1.0; // Assegna peso a questa colonna
-        gbc.insets = new Insets(12, 0, 12, 0); // Spazio interno: top, left, bottom, right.
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
+        gbc.insets = new Insets(12, 0, 12, 0);
         centerContainer.add(metodoPagamentoField, gbc);
         
-        // --- JLabel "Errore di Login" ---
         registerErrorField = new JLabel("La combinazione di email, password e chiave d'accesso potrebbe essere errata");
         registerErrorField.setForeground(Color.RED);
-        registerErrorField.setFont(new Font("Segoe UI",Font.PLAIN, 16)); // Font a scelta
-        gbc.gridx = 0; // Colonna 0 (sotto la label "emailLabel:" o "passwordLabel:")
-        gbc.gridy = 5; // Riga 2 (sotto il campo password che è in riga 1)
-        gbc.gridwidth = 2; //  Questo fa in modo che la label occupi 2 colonne 
-        gbc.anchor = GridBagConstraints.CENTER; // Allinea a sinistra
-        gbc.fill = GridBagConstraints.NONE; // Non far espandere la label
-        gbc.weightx = 0.0; // Non dare peso orizzontale
+        registerErrorField.setFont(new Font("Segoe UI",Font.PLAIN, 16));
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.weightx = 0.0;
         registerErrorField.setVisible(false);
         centerContainer.add(registerErrorField, gbc);          
         
-        // --- JLabel "Se sei un amministratore accedi qui" ---
         goToAdminLabel = new JLabel("<html><u>Se sei un cliente accedi qui</u></html>");
         goToAdminLabel.setForeground(Color.WHITE);
         goToAdminLabel.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         gbc.gridx = 0;
         gbc.gridy = 6;
-        gbc.gridwidth = 2; // Manteniamo questo valore o prova 3 se hai più colonne o se c'è una colonna invisibile.
+        gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.WEST;
-        gbc.fill = GridBagConstraints.NONE; // Manteniamo NONE, poiché non vogliamo che si estenda
+        gbc.fill = GridBagConstraints.NONE;
         gbc.weightx = 0.0;
         gbc.insets = new Insets(10, 0, 12, 0);
         
@@ -335,13 +305,11 @@ public class ClientRegister_View extends JFrame {
         
         centerContainer.add(goToAdminLabel, gbc);
         
-        // --- JButton "Accedi" ---
         loginButton = new JButton("Registrati");
-        loginButton.setBackground(new Color(175, 207, 255)); // Sfondo simile ai campi di input
-        loginButton.setForeground(new Color(51, 103, 153)); // Testo 
-        loginButton.setFont(new Font("Segoe UI", Font.BOLD, 16)); // Font audace e dimensione 16
-        loginButton.setPreferredSize(new Dimension(125, 45)); // Dimensione fissa (larghezza, altezza)
-        // Rimuove il bordo di focus (il rettangolo che appare quando il pulsante è selezionato)
+        loginButton.setBackground(new Color(175, 207, 255));
+        loginButton.setForeground(new Color(51, 103, 153));
+        loginButton.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        loginButton.setPreferredSize(new Dimension(125, 45));
         loginButton.setFocusPainted(false); 
         gbc.gridx = 0;
         gbc.gridy = 7;
@@ -354,12 +322,11 @@ public class ClientRegister_View extends JFrame {
         
         centerContainer.add(loginButton, gbc);
         
-     // --- Aggiunta dei Contenitori al Content Pane della Finestra Principale ---
         this.getContentPane().add(ovestContainer, BorderLayout.WEST);
         this.getContentPane().add(centerContainer, BorderLayout.CENTER);
     }
 	
-	public void activateError(String errorText) { // Attiva il testo di errore!
+	public void activateError(String errorText) {
 		registerErrorField.setText(errorText);
 		registerErrorField.setVisible(true);
 	}
