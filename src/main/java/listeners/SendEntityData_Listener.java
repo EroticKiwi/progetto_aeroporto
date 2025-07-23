@@ -24,7 +24,7 @@ public class SendEntityData_Listener implements ActionListener {
 		}
 		
 		if(ViewController.getInstance().GetActiveEntity_Enum() == ActiveEntity_Enum.Biglietto) {
-			//InsertBiglietto();
+			InsertBiglietto();
 		}
 		
 	}
@@ -32,21 +32,21 @@ public class SendEntityData_Listener implements ActionListener {
 	void InsertAereo() {
 		/*
 		
-		InsertEntity_View insertEntity_View = (InsertEntity_View) ViewController.getInstance().GetView(3);
+		EntityDetails_View entityDetails_View = (EntityDetails_View) ViewController.getInstance().GetView(4);
 		
-		int id_aeroporto_residenza = insertEntity_View.GetId_Aeroporto_Residenza();
+		int id_aeroporto_residenza = entityDetails_View.GetId_Aeroporto_Residenza();
 		
-		int capienza = insertEntity_View.GetCapienza();
+		int capienza = entityDetails_View.GetCapienza();
 		
 		if(capienza < 5) {
-			ViewController.getInstance().InsertEntity_ShowError("L'aereo deve avere una capienza minima pari a 5!");
+			ViewController.getInstance().EntityDetailsView_ShowError("L'aereo deve avere una capienza minima pari a 5!");
 			return;
 		}
 		
-		String modello = insertEntity_View.GetModello();
+		String modello = entityDetails_View.GetModello();
 		
 		if(modello.equals("")) {
-			ViewController.getInstance().InsertEntity_ShowError("Il campo 'Modello' non può essere vuoto!");
+			ViewController.getInstance().EntityDetailsView_ShowError("Il campo 'Modello' non può essere vuoto!");
 			return;
 		}
 		
@@ -58,23 +58,23 @@ public class SendEntityData_Listener implements ActionListener {
 	void InsertAeroporto() {
 		/*
 		 
-		 InsertEntity_View insertEntity_View = (InsertEntity_View) ViewController.getInstance().GetView(3);
+		 EntityDetails_View entityDetails_View = (EntityDetails_View) ViewController.getInstance().GetView(4);
 		 
-		 int numeroPiste = insertEntity_View.GetNumeroPiste();
+		 int numeroPiste = entityDetails_View.GetNumeroPiste();
 		 if(numeroPiste <= 0){
-		 	ViewController.getInstance().InsertEntity_ShowError("Il numero di piste non può essere pari o inferiore a 0!");
+		 	ViewController.getInstance().EntityDetailsView_ShowError("Il numero di piste non può essere pari o inferiore a 0!");
 		 	return;
 		 }
 		 
 		 String citta = insertEntity_View.GetCitta();
 		 if(citta.equals("")){
-		 	ViewController.getInstance().InsertEntity_ShowError("Il campo 'Città' non può essere vuoto!");
+		 	ViewController.getInstance().EntityDetailsView_ShowError("Il campo 'Città' non può essere vuoto!");
 		 	return;
 		 }
 		 
-		 String nazione = insertEntity_View.GetNazione();
+		 String nazione = entityDetails_View.GetNazione();
 		 if(nazione.equals("")){
-		 	ViewController.getInstance().InsertEntity_ShowError("Il campo 'Nazione' non può essere vuoto!")
+		 	ViewController.getInstance().EntityDetailsView_ShowError("Il campo 'Nazione' non può essere vuoto!")
 			return;
 		 }
 		 
@@ -87,20 +87,20 @@ public class SendEntityData_Listener implements ActionListener {
 		
 		/*
 		 
-		 InsertEntity_View insertEntity_View = (InsertEntity_View) ViewController.getInstance().GetView(3);
+		 EntityDetails_View entityDetails_View = (EntityDetails_View) ViewController.getInstance().GetView(4);
 		 
-		 int id_aereo = insertEntity_View.GetId_Aereo();
+		 int id_aereo = entityDetails_View.GetId_Aereo();
 		 
-		 int id_aeroporto_partenza = insertEntity_View.GetId_Aeroporto_Partenza();
+		 int id_aeroporto_partenza = entityDetails_View.GetId_Aeroporto_Partenza();
 		 
-		 int id_aeroporto_arrivo = insertEntity_View.GetId_Aeroporto_Arrivo();
+		 int id_aeroporto_arrivo = entityDetails_View.GetId_Aeroporto_Arrivo();
 		 
 		 int postiLiberi = DataController.getInstance().getCapienzaAereo(id_aereo);
 		 
-		 float prezzo = insertEntity_View.GetPrezzo();
+		 float prezzo = entityDetails_View.GetPrezzo();
 		 
 		 if(prezzo <= 0){
-		 	ViewController.getInstance().InsertEntity_ShowError("Il prezzo non deve essere pari o inferiore a 0!");
+		 	ViewController.getInstance().EntityDetails_ShowError("Il prezzo non deve essere pari o inferiore a 0!");
 		 	return;
 		 }
 		 
@@ -109,15 +109,15 @@ public class SendEntityData_Listener implements ActionListener {
 		 	return; // ViewController avrà già gestito l'errore lanciato dal DataController.
 		 }
 		 
-		 String orario_partenza = insertEntity_View.GetOrario_Partenza();
+		 String orario_partenza = entityDetails_View.GetOrario_Partenza();
 		 if(orario_partenza.equals("")){
-		 	ViewController.getInstance().InsertEntity_ShowError("Il campo 'Orario di partenza" non può essere vuoto!");
+		 	ViewController.getInstance().EntityDetialsView_ShowError("Il campo 'Orario di partenza" non può essere vuoto!");
 		 	return;
 		 }
 		 
-		 String orario_arrivo = insertEntity_View.GetOrario_Arrivo();
+		 String orario_arrivo = entityDetails_View.GetOrario_Arrivo();
 		 if(orario_arrivo.equals("")){
-		 	ViewController.getInstance().InsertEntity_ShowError("Il campo 'Orario di arrivo" non può essere vuoto!");
+		 	ViewController.getInstance().EntityDetaislView_ShowError("Il campo 'Orario di arrivo" non può essere vuoto!");
 		 	return;
 		 }
 		 
@@ -125,6 +125,10 @@ public class SendEntityData_Listener implements ActionListener {
 		 
 		 DataController.getInstance().inserisciVolo(id_aereo, id_aeroporto_partenza, id_aeroporto_arrivo, postiLiberi, prezzo, nome_volo, orario_partenza, orario_arrivo, valido);
 		 */
+		
+	}
+	
+	void InsertBiglietto() {
 		
 	}
 	

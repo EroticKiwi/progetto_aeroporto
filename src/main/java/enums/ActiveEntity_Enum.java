@@ -4,5 +4,6 @@ public enum ActiveEntity_Enum {
 	Aereo,
 	Aeroporto,
 	Volo,
-	Biglietto
+	Biglietto,
+	Cliente
 }

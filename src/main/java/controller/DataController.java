@@ -40,9 +40,21 @@ public class DataController {
 		entitaObjs.clear();
 	}
 	
+	public int getIdUtente() {
+		return utenteSessione.getId();
+	}
+	
 	public String getNomeUtente() {
 		Cliente cliente = (Cliente) utenteSessione;
 		return cliente.getNome();
+	}
+	
+	public boolean isClient() { // Ci dice se l'utente loggato è un cliente. Se non è così è per forza un amministratore.
+		if(utenteSessione instanceof Cliente) {
+			return true;
+		}
+		
+		return false;
 	}
 
 	// Metodi Cliente

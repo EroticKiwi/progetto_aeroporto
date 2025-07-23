@@ -6,7 +6,8 @@ import java.awt.event.ActionListener;
 import controller.ViewController;
 import enums.ActiveEntity_Enum;
 
-public class FindEntity_Listener implements ActionListener { // POTREMMO CREARE UNA CLASSE ASTRATTA PER QUESTI LISTENER!
+// POTREMMO CREARE UNA CLASSE ASTRATTA PER QUESTI LISTENER!
+public class FindEntity_Listener implements ActionListener { // Viene chiamata quando si preme su un entità specifica e si vuole aprire EntityDetails_View
 
 	ActiveEntity_Enum activeEntity; // Enum per il tipo di entità
 	int entityId; // id dell'entità specifica da passare poi per l'apertura della pagina dettagli entità

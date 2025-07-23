@@ -131,8 +131,6 @@ public class ViewController {
 		adminLoginForm.activateError();
 	}
 	
-	
-	
 	// Metodi view FindEntity_View
 	
 	public void FindEntityView_Activate(ActiveEntity_Enum activeEntity) {
@@ -166,6 +164,8 @@ public class ViewController {
 		
 		 // findEntity_View.SetEntityList(DataController.getInstance().getEntities());
 		
+		FindEntity_View findEntity_View = (FindEntity_View) views.get(3);
+		findEntity_View.setJList_Entities();
 		ActivateView(3);
 	}
 	

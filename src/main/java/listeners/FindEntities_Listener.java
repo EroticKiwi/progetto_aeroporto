@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import controller.ViewController;
 import enums.ActiveEntity_Enum;
 
-public class FindEntities_Listener implements ActionListener {
+public class FindEntities_Listener implements ActionListener { // Viene chiamata dalla sidebar
 	
 	ActiveEntity_Enum activeEntity;
 	

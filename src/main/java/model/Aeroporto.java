@@ -55,7 +55,7 @@ public class Aeroporto {
 	}
 	
 	public String toString() {
-		return id + ", " + citta + ", " + nazione + ", " + numero_piste;
+		return "ID: " + id + " | Nazione: " + nazione + " | Città: " + citta;
 	}
 	
 }
