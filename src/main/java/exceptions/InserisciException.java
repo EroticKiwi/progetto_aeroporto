@@ -13,12 +13,14 @@ public class InserisciException extends Throwable
 	
 	String message;
 	
-	public InserisciException(String message) {
-		this.message = message.toLowerCase();
+	public InserisciException(String message) { // in questo parametro arriva la stringa dell' SQLException
+		this.message = message.toLowerCase();  
 		System.out.println(message);
 	}
 	
-    public String getMessage() {
+    public String getMessage() { // Controlla le specifiche dell'errore
+    	// Se il messaggio di errore dell' SQLException contiene una di queste stringhe
+    	// Allora noi "Specifichiamo l'errore"
     	
     	if(message.contains("non esiste")) {
     		return "";

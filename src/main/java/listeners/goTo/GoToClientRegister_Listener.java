@@ -6,7 +6,8 @@ import java.awt.event.MouseListener;
 import controller.ViewController;
 
 public class GoToClientRegister_Listener implements MouseListener {
-
+	
+	// Chiamiamo metodi del ViewController per rendere visibile la view che vogliamo
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		ViewController.getInstance().ClientRegister_Activate();

@@ -51,24 +51,24 @@ public class DataModel implements DAOGenerale{
 
 	public void inserisciEntita(String query, Map<Integer, Object> params) throws InserisciException, SQLException{
 		
-		PreparedStatement statement = null;
+		PreparedStatement statement = null; // Istanziamo
 		try {
-			 statement = DBConnection.getInstance().connection.prepareStatement(query);
-			 AssemblaStatement(statement, params);
-			 statement.execute();
-		} catch (SQLException e) {
+			 statement = DBConnection.getInstance().connection.prepareStatement(query); // Assegnamo la query precompilata
+			 AssemblaStatement(statement, params); // Compila la query (ora abbiamo la Query intera e funzionante)
+			 statement.execute(); // Fa proprio la query dentro il database
+		} catch (SQLException e) { 
 			System.out.println(e.getSQLState());
-			if(CheckDBException(e.getSQLState())) {
+			if(CheckDBException(e.getSQLState())) { // Problema al DB
 				throw e;
 			}
-			throw new InserisciException(e.getMessage());
-		} finally {
+			throw new InserisciException(e.getMessage()); // problema ai dati
+		} finally { // Se da o NON da l'eccezione viene sempre eseguito questo codice
 			try {
-				if(statement != null){
+				if(statement != null){ // 
 					 statement.close();
 				}
 			} catch(SQLException e) {
-				throw new InserisciException(e.getMessage());
+				throw new InserisciException(e.getMessage()); 
 			}
 		}
 		
@@ -134,31 +134,31 @@ public class DataModel implements DAOGenerale{
 	
 	boolean CheckDBException(String sqlCode) { // true = errore del database, false = il db funziona
 		
-		if(sqlCode.equals("08001")) {
+		if(sqlCode.equals("08001")) { // Problema connesione DB
 			return true;
 		}
 		
-		if(sqlCode.equals("08006")) {
+		if(sqlCode.equals("08006")) { // Problema connesione DB
 			return true;
 		}
 		
-		if(sqlCode.equals("08003")) {
+		if(sqlCode.equals("08003")) { // Connesione inesistente
 			return true;
 		}
 		
-		if(sqlCode.equals("08004")) {
+		if(sqlCode.equals("08004")) { // DB rifiuta la connesione
 			return true;
 		}
 		
-		if(sqlCode.equals("53300")) {
+		if(sqlCode.equals("53300")) { // Troppe connesioni alla volta
 			return true;
 		}
 		
-		if(sqlCode.equals("57P01")) {
+		if(sqlCode.equals("57P01")) { // Chiusura inaspettata del DB
 			return true;
 		}
 		
-		if(sqlCode.equals("3D000")) {
+		if(sqlCode.equals("3D000")) { // Tabella inesistente
 			return true;
 		}
 		

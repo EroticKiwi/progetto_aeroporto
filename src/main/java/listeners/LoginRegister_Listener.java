@@ -9,7 +9,11 @@ import controller.DataController;
 import controller.ViewController;
 import view.*;
 
+// I bottoni di registrazione e Login utilizzano questo oggetto listener
 public class LoginRegister_Listener implements ActionListener{
+	
+	// Qua dentro viene controllata quale finestra ha cliccato il bottone
+	// In base al tipo di finestra capisce quali dati deve prendere e quali mandare
 	
 	JFrame parent; // Può essere sia Login/Registrazione Cliente che Login Amministratore
 	

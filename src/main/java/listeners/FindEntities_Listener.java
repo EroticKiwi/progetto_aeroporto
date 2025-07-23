@@ -8,14 +8,15 @@ import enums.ActiveEntity_Enum;
 
 public class FindEntities_Listener implements ActionListener { // Viene chiamata dalla sidebar
 	
-	ActiveEntity_Enum activeEntity;
+	ActiveEntity_Enum activeEntity; // entita da prendere una volta premuto il bottone
 	
 	public FindEntities_Listener(ActiveEntity_Enum activeEntity) {
 		this.activeEntity = activeEntity;
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		ViewController.getInstance().FindEntityView_Activate(activeEntity);
+		ViewController.getInstance().FindEntityView_Activate(activeEntity); // Apre la finestra per mostrare le entità e gli passa l'enum
+		// l'enum dice che voglio vedere esattamente quella entità
 	}
 
 }

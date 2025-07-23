@@ -14,8 +14,10 @@ public class DataController {
 	
 	private static DataController instance;
 	
+	// Viene utilizzata solo in InserisciCliente, TrovaCliente, TrovaAmministratore
 	private Utente utenteSessione; // Quando un utente effettua l'accesso, i suoi dati vengono mantenuti in memoria.
 	
+	// è praticamente una cache che viene riempita e svuotata ogni  "SELECT"
 	private ArrayList<Object> entitaObjs; // Quando si effettua un "trova" su entità diverse da Cliente e Amministratore, allora si utilizza questa lista per ottimizzare il consumo di memoria.
 
 	private DataController() {
@@ -32,7 +34,7 @@ public class DataController {
 	
 	// Metodi Utility
 	
-	public ArrayList<Object> getEntities(){
+	public ArrayList<Object> getEntities(){ // Questo metodo serve solo per il ViewController
 		return entitaObjs;
 	}
 	
@@ -58,7 +60,8 @@ public class DataController {
 	}
 	
 	public boolean isClient() { // Ci dice se l'utente loggato è un cliente. Se non è così è per forza un amministratore.
-		if(utenteSessione instanceof Cliente) {
+		if(utenteSessione instanceof Cliente) { // Viene chiamato in tutte le view che devono mostrare
+												// Informazioni diverse in base al ruolo dell'utente
 			return true;
 		}
 		
@@ -67,7 +70,10 @@ public class DataController {
 
 	// Metodi Cliente
 	
+	// Serve per la registrazione (ClientRegister_View)
 	public void inserisciCliente(String nome, String cognome, String email, String password, String metodo_pagamento) { // Chiamato alla registrazione del cliente, oppure alla modifica dei suoi dati
+		// La view ClientRegister_View una volta cliccato il bottone "Registra"
+		// chiama il listener e il listener chiama questo metodo
 		
 		// Inserimento cliente nel DB
 		// Ok, e ora l'id come lo prendiamo?!
@@ -81,13 +87,18 @@ public class DataController {
 		params.put(2, cognome);
 		params.put(3, email);
 		params.put(4, password);
-		params.put(5, metodo_pagamento);
+		params.put(5, metodo_pagamento); // Carichiamo i dati dentro una Map con l'indice di posizione nella query
+		
 		
 		try {
-			DataModel.getInstance().inserisciEntita(query, params);
+			// Chiamiamo il data Model e gli diamo la query da fare, il DataModel la assembla e la esegue
+			DataModel.getInstance().inserisciEntita(query, params); 
 			
-			// Trova Cliente
+			// Voglio salvare i dati dell'utente nel nostro attributo
+			// Ma noi non sappiamo l'iD del cliente (in quanto viene auto generato)
+			// Quindi lo andiamo a trovare tramite una SELECT
 			
+			// --- Trova Cliente --- Con questa query cerchiamo l'ID cliente che ha questa certa email e passw
 			query = "SELECT id FROM Cliente WHERE email = ? AND password = ?";
 			
 			clearEntities();
@@ -96,8 +107,9 @@ public class DataController {
 			params.put(1, email);
 			params.put(2, password);
 			
-			ResultSet rs = DataModel.getInstance().trovaEntita(query, params);
-			int id = -1;
+			// Chiamiamo il Data model per farci restituire un ResultSet con L'ID
+			ResultSet rs = DataModel.getInstance().trovaEntita(query, params); 
+			int id = -1; // Misura di sicurezza per non avere un ID vuoto
 			
 			if(!rs.next()) { // bisogna sempre fare rs.next() dato che si parte da prima dei risultati, per qualche oscuro motivo :P
 				// Dici alla view che c'è stato un errore generico del DB.
@@ -105,15 +117,16 @@ public class DataController {
 				return;
 			}
 						
-			id = rs.getInt("id");
+			id = rs.getInt("id"); // Da questo metodo ResultSet otteniamo L'ID caricato
 			
 			rs.getStatement().close();
 			
 			utenteSessione = new Cliente(id, nome, cognome, email, password, metodo_pagamento);
 			
-			System.out.println(utenteSessione.toString());
+			System.out.println(utenteSessione.toString()); // Per debug
 			
 			// Prosegui con le view
+			// Attiva la view specifica FindEntity
 			ViewController.getInstance().FindEntityView_Activate(ActiveEntity_Enum.Biglietto);
 			
 		} catch (InserisciException e) {
@@ -124,7 +137,9 @@ public class DataController {
 		}
 	}
 	
-	public void trovaCliente(String email, String password) { // Chiamato al Login del cliente
+	
+	 // Questo metodo viene chiamato quando facciamo il login (per vedere se l'utente esiste)
+	public void trovaCliente(String email, String password) {
 		String query = "SELECT * FROM Cliente WHERE email = ? AND password = ?";
 		Map<Integer, Object> params = new HashMap<Integer, Object>();
 		
@@ -163,6 +178,8 @@ public class DataController {
 			ViewController.getInstance().ShowDBError_Modal();
 		}
 	}
+	
+	
 	
 	public void eliminaCliente() { // Chiamato quando un cliente prova ad eliminare il suo account
 

@@ -12,12 +12,13 @@ import view.*;
 public class ViewController {
 
 	private static ViewController instance;
+	
 	ArrayList<JFrame> views; // Lista di tutte le view accessibili nel programma
 	int activeView; // View attiva al momento
 	
 	ActiveEntity_Enum activeEntity; // Enum modificato attraverso specifici metodi "View_Activate" che ci serve per definire quali entità passare quando si accede a certe view.
 	
-	private ViewController() {
+	private ViewController() { // Crea le finestre di Login e registrazione (le mette dentro l'arrayList)
 		views = new ArrayList<JFrame>();
 		views.add(new ClientLogin_View()); // views.get(0) = View del login cliente
 		views.add(new ClientRegister_View()); // views.get(1) = View della registrazione cliente
@@ -36,11 +37,11 @@ public class ViewController {
 		return instance;
 	}
 	
+	
+	
 	// Utility
-	
-	
-	
-	public JFrame GetView(int view) {
+	// Restituisce la view specifica che si trova alla posizione che gli passiamo (viene chiamato dalle view)
+	public JFrame GetView(int view) { 
 		if(view < 0 || view >= views.size()) {
 			return views.get(0); // Per sicurezza mandiamo la pagina di login.
 		}
@@ -50,9 +51,9 @@ public class ViewController {
 	
 	
 	
-	public void ActivateView(int viewToActivate) {
+	public void ActivateView(int viewToActivate) { // Viene chiamato dentro ViewController
 		activeView = viewToActivate;
-		views.get(viewToActivate).setVisible(true);
+		views.get(viewToActivate).setVisible(true); // Rendiamo la view passata visibile
 	}
 	
 	void DisableAllViews() { // Spegniamo tutte le view prima di attivarne una in particolare
@@ -76,9 +77,11 @@ public class ViewController {
 	
 	
 	
-	public ActiveEntity_Enum GetActiveEntity_Enum() {
+	public ActiveEntity_Enum GetActiveEntity_Enum() { // Ci restituisce un ActiveEntity_Enum per dirci qual'è l'entità interessata al momento
 		return activeEntity;
 	}
+	
+	
 	
 	public void Logout() { // Elimina le view con dati statici relativi al ruolo dell'utente e poi torna al login
 		
