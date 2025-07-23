@@ -244,7 +244,7 @@ public class ClientRegister_View extends JFrame {
         gbc.insets = new Insets(12, 0, 12, 10);
         centerContainer.add(metodoPagamentoLabel, gbc);
         
-        metodoPagamentoField = new JPasswordField(20);
+        metodoPagamentoField = new JTextField(20);
         metodoPagamentoField.setText("");
         metodoPagamentoField.setPreferredSize(new Dimension(350, 45));
         metodoPagamentoField.setBackground(new Color(60, 63, 66));

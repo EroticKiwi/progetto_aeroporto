@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import enums.ActiveEntity_Enum;
 import model.*;
 import exceptions.*;
 
@@ -38,6 +39,11 @@ public class DataController {
 	public void clearEntities(){
 		entitaObjs.clear();
 	}
+	
+	public String getNomeUtente() {
+		Cliente cliente = (Cliente) utenteSessione;
+		return cliente.getNome();
+	}
 
 	// Metodi Cliente
 	
@@ -65,6 +71,8 @@ public class DataController {
 			query = "SELECT id FROM Cliente WHERE email = ? AND password = ?";
 			
 			clearEntities();
+			params.clear();
+			
 			params.put(1, email);
 			params.put(2, password);
 			
@@ -74,6 +82,7 @@ public class DataController {
 			if(!rs.next()) { // bisogna sempre fare rs.next() dato che si parte da prima dei risultati, per qualche oscuro motivo :P
 				// Dici alla view che c'è stato un errore generico del DB.
 				rs.getStatement().close();
+				return;
 			}
 						
 			id = rs.getInt("id");
@@ -85,11 +94,12 @@ public class DataController {
 			System.out.println(utenteSessione.toString());
 			
 			// Prosegui con le view
+			ViewController.getInstance().FindEntityView_Activate(ActiveEntity_Enum.Biglietto);
 			
 		} catch (InserisciException e) {
 			ViewController.getInstance().ClientRegister_ShowError(e.getMessage());
 		} catch (SQLException | TrovaException e) { /* errore nell'rs.next() o nella chiusura dello statement*/
-			// Comunica alla view che c'è stato un errore generico del database!
+			// Comunica alla view che c'è stato un errore generico del database
 			ViewController.getInstance().ShowDBError_Modal();
 		}
 	}
@@ -126,7 +136,8 @@ public class DataController {
 			System.out.println(utenteSessione.toString());
 			
 			// Prosegui con le view
-			
+			ViewController.getInstance().FindEntityView_Activate(ActiveEntity_Enum.Biglietto);
+
 		} catch(SQLException | TrovaException e) {
 			// Comunica alla view che c'è stato un errore generico del DB
 			ViewController.getInstance().ShowDBError_Modal();
@@ -186,6 +197,10 @@ public class DataController {
 			utenteSessione = new Amministratore(id, email, password, chiave_accesso);
 			
 			System.out.println(utenteSessione.toString());
+			
+			// Prosegui con le view
+			ViewController.getInstance().FindEntityView_Activate(ActiveEntity_Enum.Volo);
+
 			
 		} catch(SQLException e) {
 			// Comunica alla view che c'è stato un errore generico del DB
@@ -712,7 +727,7 @@ public class DataController {
 	
 	public void trovaTuttiBiglietti() {
 		
-		String query = "SELECT * FROM Bigietti WHERE id_cliente = ?";
+		String query = "SELECT * FROM Biglietto WHERE id_cliente = ?";
 		Map<Integer, Object> params = new HashMap<Integer, Object>();
 		
 		params.put(1, utenteSessione.getId());

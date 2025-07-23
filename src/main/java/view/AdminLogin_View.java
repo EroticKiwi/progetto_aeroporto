@@ -315,7 +315,7 @@ public class AdminLogin_View extends JFrame {
         this.getContentPane().add(centerContainer, BorderLayout.CENTER); // Aggiungiamo il pannello CENTRALE nella regione CENTRO
         
         // Rendiamo la finestra visibile solo dopo che tutti i componenti sono stati aggiunti e configurati
-        this.setVisible(true); // Impostiamo la finestra come visibile
+        //this.setVisible(true); // Impostiamo la finestra come visibile (DEBUG)
     }
 	
     

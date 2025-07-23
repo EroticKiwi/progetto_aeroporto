@@ -33,7 +33,7 @@ public class InserisciException extends Throwable
     	}
     	
     	if(message.contains("email")) {
-    		return "Il campo 'Email' è già presente nella base dati.";
+    		return "L'email inserita appartiene già ad un altro account.";
     	}
     	
     	return message;

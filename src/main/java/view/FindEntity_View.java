@@ -2,6 +2,9 @@ package view;
 
 import model.Biglietto;
 import javax.swing.*;
+
+import controller.DataController;
+
 import java.awt.*;
 
 import listeners.goTo.GoToAdminLogin_Listener;
@@ -47,7 +50,7 @@ public class FindEntity_View extends JFrame {
 
 
 
-        registerTitleLabel = new JLabel("Ciao Apicella");
+        registerTitleLabel = new JLabel("Ciao, " + DataController.getInstance().getNomeUtente());
         registerTitleLabel.setFont(new Font("Segoe UI", Font.BOLD, 40));
         registerTitleLabel.setForeground(new Color(51, 103, 153));
         registerTitleLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -137,7 +140,7 @@ public class FindEntity_View extends JFrame {
         this.getContentPane().add(ovestContainer, BorderLayout.WEST);
         this.getContentPane().add(centerContainer, BorderLayout.CENTER);
            
-        this.setVisible(true);
+        // this.setVisible(true); Debug
     }
 }
 	

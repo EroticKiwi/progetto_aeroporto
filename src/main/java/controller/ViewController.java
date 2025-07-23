@@ -113,6 +113,10 @@ public class ViewController {
 	
 	public void FindEntityView_Activate(ActiveEntity_Enum activeEntity) {
 		
+		if(views.size() < 4) { // Abbiamo delineato un flusso ben preciso, sappiamo per certo che la finestra "FindEntity_View" sarà esattamente la quarta da creare.
+			views.add(new FindEntity_View()); // Creiamo la finestra invece di instanziarla subito per non incorrere in errori con DataController, evitando dunque di fare accessi nulli.
+		}
+		
 		DisableAllViews();
 		
 		SetActiveEntity_Enum(activeEntity);
@@ -145,13 +149,17 @@ public class ViewController {
 	
 	public void EntityDetailsView_Activate(ActiveEntity_Enum activeEntity, int id) {
 		
+		if(views.size() < 5) { // Abbiamo delineato un flusso ben preciso, sappiamo per certo che la finestra "FindEntity_View" sarà esattamente la quinta da creare.
+			views.add(new EntityDetails_View()); // Creiamo la finestra invece di instanziarla subito per non incorrere in errori con DataController, evitando dunque di fare accessi nulli.
+		}
+		
 		DisableAllViews();
 		
 		SetActiveEntity_Enum(activeEntity);
 		
 		// EntityDetails_View entityDetails_view = (EntityDetails_View) views.get(4);
 		
-		DataController.getInstance().clearEntities(); // Puliamo per sicurezza, anche se la lista viene pulita nel medesimo modo all'interno dei vari metodi
+		DataController.getInstance().clearEntities(); // Puliamo per sicurezza, anche se la lista viene pulita nel medesimo modo all'interno dei vari.
 		
 		switch(activeEntity) {
 		case ActiveEntity_Enum.Aereo:

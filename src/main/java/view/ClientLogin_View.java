@@ -231,7 +231,6 @@ public class ClientLogin_View extends JFrame {
         
         this.getContentPane().add(ovestContainer, BorderLayout.WEST);
         this.getContentPane().add(centerContainer, BorderLayout.CENTER);
-
     }
     
 	public void activateError() { 

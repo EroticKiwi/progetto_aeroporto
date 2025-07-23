@@ -105,6 +105,7 @@ public class DataModel implements DAOGenerale{
 			}
 			rs = statement.executeQuery();
 		} catch(SQLException e) {
+			System.out.println(e.getMessage());
 			if(CheckDBException(e.getSQLState())) {
 				throw e;
 			}
