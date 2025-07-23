@@ -1,5 +1,6 @@
 import controller.ViewController;
 import view.FindEntity_View;
+import view.EntityDetails_View;
 
 /*
  * NOTE SULLE VIEW:
@@ -9,8 +10,7 @@ import view.FindEntity_View;
 public class Main {
 
 	public static void main(String[] args) {
-		
-		ViewController.getInstance().ClientLogin_Activate();
+		EntityDetails_View finestra = new EntityDetails_View();
 		
 	}
 }
