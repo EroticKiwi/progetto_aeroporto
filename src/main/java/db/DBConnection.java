@@ -10,19 +10,19 @@ public class DBConnection {
 	
 	private static DBConnection instance;
 	
-	public Connection connection;
-	public Statement statement;
-	public ResultSet rs;
+	public Connection connection; // oggetto di tipo Connection per connettersi al database
+	public Statement statement; // oggetto di tipo Statement che invia istruzioni SQL al database
+	public ResultSet rs; // oggetto di tipo ResultSet conserva i risultati delle query "SELECT"
 		
 	private DBConnection() throws SQLException {
 		try {
 			Connect();
 		} catch (SQLException e) {
-			throw e;
+			throw e; // viene propagata a chiunque tenti di ottenere un istanza DBConnection
 		}
 	}
 	
-	public static DBConnection getInstance() throws SQLException {
+	public static DBConnection getInstance() throws SQLException { // Restituisce un istanza DBConnection
 		if(instance == null) {
 			instance = new DBConnection();
 		}

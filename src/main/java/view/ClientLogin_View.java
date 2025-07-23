@@ -237,7 +237,7 @@ public class ClientLogin_View extends JFrame {
 		loginErrorLabel.setVisible(true);
 	}
 	
-	public String getEmail() {
+	public String getEmail() { 
 		return emailField.getText();
 	}
 	

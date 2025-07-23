@@ -25,6 +25,8 @@ public class ViewController {
 		// views.add(new EntityDetails_View()); // views.get(4) = View dei dettagli dell'entità e per l'inserimento dell'entità (e per la cancellazione delle entità)
 	}
 	
+	
+	
 	public static ViewController getInstance() {
 		if(instance == null) {
 			instance = new ViewController();
@@ -35,6 +37,8 @@ public class ViewController {
 	
 	// Utility
 	
+	
+	
 	public JFrame GetView(int view) {
 		if(view < 0 || view >= views.size()) {
 			return views.get(0); // Per sicurezza mandiamo la pagina di login.
@@ -42,6 +46,8 @@ public class ViewController {
 		
 		return views.get(view);
 	}
+	
+	
 	
 	public void ActivateView(int viewToActivate) {
 		activeView = viewToActivate;
@@ -54,18 +60,26 @@ public class ViewController {
 		}
 	}
 	
+	
+	
 	public void ShowDBError_Modal() {
 		JOptionPane.showMessageDialog(views.get(activeView), "Errore di connessione al database. Riprova più tardi", "Si è verificato un errore!", JOptionPane.INFORMATION_MESSAGE);
 		// Magari dopo questo, mandiamo l'utente alla pagina login!
 	}
 	
+	
+	
 	public void SetActiveEntity_Enum(ActiveEntity_Enum activeEntity) { // Quando andiamo su una pagina "Trova" o "Inserisci" chiamiamo questo metodo ed impostiamo l'entità per cui stiamo facendo queste operazioni.
 		this.activeEntity = activeEntity;
 	}
 	
+	
+	
 	public ActiveEntity_Enum GetActiveEntity_Enum() {
 		return activeEntity;
 	}
+	
+	
 	
 	// Metodi view Cliente Login
 	
@@ -75,6 +89,8 @@ public class ViewController {
 		
 		ActivateView(0);
 	}
+	
+	
 	
 	public void ClientLogin_ShowLoginError() {
 		ClientLogin_View clientLoginForm = (ClientLogin_View) views.get(0);
@@ -90,10 +106,14 @@ public class ViewController {
 		ActivateView(1);
 	}
 	
+	
+	
 	public void ClientRegister_ShowError(String errorMessage) {
 		ClientRegister_View clientRegisterForm = (ClientRegister_View) views.get(1);
 		clientRegisterForm.activateError(errorMessage);
 	}
+	
+	
 	
 	// Metodi view Admin Login
 	
@@ -104,10 +124,14 @@ public class ViewController {
 		ActivateView(2);
 	}
 	
+	
+	
 	public void AdminLogin_ShowLoginError() {
 		AdminLogin_View adminLoginForm = (AdminLogin_View) views.get(2);
 		adminLoginForm.activateError();
 	}
+	
+	
 	
 	// Metodi view FindEntity_View
 	

@@ -50,7 +50,11 @@ public class FindEntity_View extends JFrame {
 
 
 
+
         registerTitleLabel = new JLabel("Ciao, " + DataController.getInstance().getNomeUtente());
+
+        // egisterTitleLabel = new JLabel("Home");
+
         registerTitleLabel.setFont(new Font("Segoe UI", Font.BOLD, 40));
         registerTitleLabel.setForeground(new Color(51, 103, 153));
         registerTitleLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -64,7 +68,7 @@ public class FindEntity_View extends JFrame {
         accountinfoLabel.setForeground(new Color(95, 99, 104));
         accountinfoLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         ovestContainer.add(accountinfoLabel);
-        ovestContainer.add(Box.createVerticalStrut(80));
+        ovestContainer.add(Box.createVerticalStrut(115));
 
         
         
@@ -73,7 +77,9 @@ public class FindEntity_View extends JFrame {
         findVoloButton.setForeground(new Color(51, 103, 153));
         findVoloButton.setFont(new Font("Segoe UI", Font.BOLD, 16));
         findVoloButton.setPreferredSize(new Dimension(125, 45));
-        findVoloButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+        // Imposta la dimensione massima per corrispondere a quella preferita 
+        findVoloButton.setMaximumSize(new Dimension(250, 50)); // Lo usiamo quando si usa il BoxLayout
+       
         findVoloButton.setFocusPainted(false);
         ovestContainer.add(findVoloButton);
         ovestContainer.add(Box.createVerticalStrut(20));
@@ -85,6 +91,9 @@ public class FindEntity_View extends JFrame {
         findBigliettiButton.setForeground(new Color(51, 103, 153));
         findBigliettiButton.setFont(new Font("Segoe UI", Font.BOLD, 16));
         findBigliettiButton.setPreferredSize(new Dimension(125, 45));
+        // Imposta la dimensione massima per corrispondere a quella preferita ()
+        findBigliettiButton.setMaximumSize(new Dimension(250, 50)); // Lo usiamo quando si usa il BoxLayout
+        
         findBigliettiButton.setFocusPainted(false);
         ovestContainer.add(findBigliettiButton);
         ovestContainer.add(Box.createVerticalStrut(20));
@@ -96,6 +105,9 @@ public class FindEntity_View extends JFrame {
         accountDetailsButton.setForeground(new Color(51, 103, 153));
         accountDetailsButton.setFont(new Font("Segoe UI", Font.BOLD, 16));
         accountDetailsButton.setPreferredSize(new Dimension(125, 45));
+        // Imposta la dimensione massima per corrispondere a quella preferita ()
+        accountDetailsButton.setMaximumSize(new Dimension(250, 50)); // Lo usiamo quando si usa il BoxLayout
+        
         accountDetailsButton.setFocusPainted(false);
         ovestContainer.add(accountDetailsButton);
         ovestContainer.add(Box.createVerticalStrut(20));
@@ -106,10 +118,14 @@ public class FindEntity_View extends JFrame {
         logoutButton.setBackground(new Color(175, 207, 255));
         logoutButton.setForeground(new Color(51, 103, 153));
         logoutButton.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        logoutButton.setPreferredSize(new Dimension(125, 45));
+        logoutButton.setPreferredSize(new Dimension(200, 60));
+        // Imposta la dimensione massima per corrispondere a quella preferita ()
+        logoutButton.setMaximumSize(new Dimension(250, 50)); // Lo usiamo quando si usa il BoxLayout
+       
         logoutButton.setFocusPainted(false);
         ovestContainer.add(logoutButton);
         ovestContainer.add(Box.createVerticalStrut(20));
+        
         
         
         GoToClientLogin_Listener clientLogin = new GoToClientLogin_Listener();
@@ -121,7 +137,6 @@ public class FindEntity_View extends JFrame {
         centerContainer.setLayout(new BorderLayout());
         centerContainer.setBackground(Color.WHITE);
         centerContainer.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        
         
         
         
