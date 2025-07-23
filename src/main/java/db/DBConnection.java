@@ -4,14 +4,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class DBConnection {
 	
 	private static DBConnection instance;
 	
 	public Connection connection; // oggetto di tipo Connection per connettersi al database
-	public Statement statement; // oggetto di tipo Statement che invia istruzioni SQL al database
 	public ResultSet rs; // oggetto di tipo ResultSet conserva i risultati delle query "SELECT"
 		
 	private DBConnection() throws SQLException {

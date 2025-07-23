@@ -40,6 +40,14 @@ public class DataController {
 		entitaObjs.clear();
 	}
 	
+	public Utente getUtenteSessione() {
+		return utenteSessione;
+	}
+	
+	public void clearUtenteSessione() {
+		utenteSessione = null;
+	}
+	
 	public int getIdUtente() {
 		return utenteSessione.getId();
 	}
@@ -110,7 +118,7 @@ public class DataController {
 			
 		} catch (InserisciException e) {
 			ViewController.getInstance().ClientRegister_ShowError(e.getMessage());
-		} catch (SQLException | TrovaException e) { /* errore nell'rs.next() o nella chiusura dello statement*/
+		} catch (SQLException e) { /* errore nell'rs.next() o nella chiusura dello statement*/
 			// Comunica alla view che c'è stato un errore generico del database
 			ViewController.getInstance().ShowDBError_Modal();
 		}
@@ -150,7 +158,7 @@ public class DataController {
 			// Prosegui con le view
 			ViewController.getInstance().FindEntityView_Activate(ActiveEntity_Enum.Biglietto);
 
-		} catch(SQLException | TrovaException e) {
+		} catch(SQLException e) {
 			// Comunica alla view che c'è stato un errore generico del DB
 			ViewController.getInstance().ShowDBError_Modal();
 		}
@@ -174,8 +182,6 @@ public class DataController {
 		} catch(SQLException e) {
 			// Comunica alla view che c'è stato un errore generico del DB.
 			ViewController.getInstance().ShowDBError_Modal();
-		} catch(EliminaException e) {
-			
 		}
 		
 	}
@@ -217,34 +223,10 @@ public class DataController {
 		} catch(SQLException e) {
 			// Comunica alla view che c'è stato un errore generico del DB
 			ViewController.getInstance().ShowDBError_Modal();
-		} catch(TrovaException e) {
-			
 		}
 	}
 	
 	// Metodi Aeroporto
-	
-	public void inserisciAeroporto(String citta, String nazione, int numero_piste) { // Chiamato durante la creazione di un nuovo Aeroporto
-		
-		String query = "INSERT INTO Aeroporto(citta, nazione, numero_piste) VALUES (?, ?, ?)";
-		Map<Integer, Object> params = new HashMap<Integer, Object>();
-		
-		params.put(1, citta);
-		params.put(2, nazione);
-		params.put(3, numero_piste);
-		
-		try {
-			DataModel.getInstance().inserisciEntita(query, params);
-			
-			// Prosegui con le view
-			System.out.println("Inserimento andato a buon fine!");
-		} catch(InserisciException e) {
-			System.out.println(e.getMessage());
-			// Comunica alla view che c'è stato un errore durante l'inserimento oppure esiste già un dato uguale!
-		} catch(SQLException e) {
-			ViewController.getInstance().ShowDBError_Modal();
-		}
-	}
 	
 	public void trovaAeroporto(int id) { // Chiamato durante la ricerca di un Aeroporto
 		
@@ -273,8 +255,6 @@ public class DataController {
 		} catch(SQLException e) {
 			// Comunica alla view che c'è stato un errore generico del DB
 			ViewController.getInstance().ShowDBError_Modal();
-		} catch(TrovaException e) {
-			
 		}
 		
 	}
@@ -312,56 +292,10 @@ public class DataController {
 		} catch(SQLException e) {
 			// Comunica alla view che c'è stato un errore generico del DB
 			ViewController.getInstance().ShowDBError_Modal();
-		} catch(TrovaException e) {
-			
 		}
-	}
-	
-	public void eliminaAeroporto(int id) {
-		
-		String query = "DELETE FROM Aeroporto WHERE id = ?";
-		Map<Integer, Object> params = new HashMap<Integer, Object>();
-		
-		params.put(1, id);
-		
-		try {
-			DataModel.getInstance().eliminaEntita(query, params);
-			System.out.println("L'aeroporto è stato cancellato!");
-			// Prosegui con le view
-		} catch(SQLException e) {
-			// Comunica alla view che c'è stato un errore generico del DB
-			ViewController.getInstance().ShowDBError_Modal();
-		} catch(EliminaException e) {
-			
-		}
-		
 	}
 	
 	// Metodi Aereo
-	
-	public void inserisciAereo(int id_aeroporto_residenza, int capienza, String modello) {
-		
-		String query = "INSERT INTO Aereo(id_aeroporto_residenza, modello, capienza) VALUES (?,?,?)";
-		Map<Integer, Object> params = new HashMap<Integer, Object>();
-		
-		params.put(1, id_aeroporto_residenza);
-		params.put(2, modello);
-		params.put(3, capienza);
-		
-		try {
-			DataModel.getInstance().inserisciEntita(query, params);
-			
-			// Prosegui con le view
-			System.out.println("L'aereo è stato inserito!");
-		} catch(SQLException e) {
-			System.out.println(e.getMessage());
-			// Comunica alla view che c'è stato un errore generico del DB
-			ViewController.getInstance().ShowDBError_Modal();
-		} catch(InserisciException e) {
-			
-		}
-
-	}
 	
 	public void trovaAereo(int id) {
 		
@@ -397,8 +331,6 @@ public class DataController {
 			System.out.println("ERRORE!");
 			// Comunica alla view che c'è stato un errore generico del DB
 			ViewController.getInstance().ShowDBError_Modal();
-		} catch(TrovaException e) {
-			
 		}
 	}
 	
@@ -435,28 +367,6 @@ public class DataController {
 		} catch(SQLException e) {
 			// Comunica alla view che c'è stato un errore generico del DB
 			ViewController.getInstance().ShowDBError_Modal();
-		} catch(TrovaException e) {
-			
-		}
-		
-	}
-	
-	public void eliminaAereo(int id) {
-		
-		String query = "DELETE FROM Aereo WHERE id = ?";
-		Map<Integer, Object> params = new HashMap<Integer, Object>();
-		
-		params.put(1, id);
-		
-		try {
-			DataModel.getInstance().eliminaEntita(query, params);
-			System.out.println("L'aereo è stato cancellato!");
-			// Prosegui con le view
-		} catch(SQLException e) {
-			// Comunica alla view che c'è stato un errore generico del DB
-			ViewController.getInstance().ShowDBError_Modal();
-		} catch(EliminaException e) {
-			
 		}
 		
 	}
@@ -482,46 +392,12 @@ public class DataController {
 			return capienza;
 		} catch(SQLException e) {
 			ViewController.getInstance().ShowDBError_Modal();
-		} catch(TrovaException e) {
-			
 		}
 		
 		return 0;
 	}
 	
 	// Metodi Volo
-	
-	public void inserisciVolo(float prezzo, int id_aeroporto_partenza, int id_aeroporto_arrivo, String orario_partenza, String orario_arrivo, int id_aereo, int posti_liberi, boolean valido) {
-		
-		String query = "INSERT INTO Volo(nome, prezzo, id_aeroporto_partenza, id_aeroporto_arrivo, orario_partenza, orario_arrivo, id_aereo, posti_liberi, valido) VALUES (?,?,?,?,?,?,?,?,?)";
-		Map<Integer, Object> params = new HashMap<Integer, Object>();
-		
-		String nome = ""; // Il nome verrà inserito tramite trigger dal DB.
-		params.put(1, nome);
-		params.put(2, prezzo);
-		params.put(3, id_aeroporto_partenza);
-		params.put(4, id_aeroporto_arrivo);
-		params.put(5, orario_partenza);
-		params.put(6, orario_arrivo);
-		params.put(7, id_aereo);
-		params.put(8, posti_liberi);
-		params.put(9, valido);
-
-		
-		try {
-			DataModel.getInstance().inserisciEntita(query, params);
-			
-			// Prosegui con le view
-			System.out.println("Il volo è stato inserito!");
-		} catch(SQLException e) {
-			System.out.println(e.getMessage());
-			// Comunica alla view che c'è stato un errore generico del DB
-			ViewController.getInstance().ShowDBError_Modal();
-		} catch(InserisciException e) {
-			
-		}
-		
-	}
 	
 	public void trovaVolo(int id) {
 		
@@ -563,8 +439,6 @@ public class DataController {
 			System.out.println("ERRORE!");
 			// Comunica alla view che c'è stato un errore generico del DB
 			ViewController.getInstance().ShowDBError_Modal();
-		} catch(TrovaException e) {
-			
 		}
 		
 	}
@@ -612,7 +486,7 @@ public class DataController {
 			
 			// Prosegui con le view
 						
-		} catch(SQLException | TrovaException e) {
+		} catch(SQLException e) {
 			// Comunica alla view che c'è stato un errore generico del DB
 			ViewController.getInstance().ShowDBError_Modal();
 		}
@@ -633,8 +507,6 @@ public class DataController {
 		} catch(SQLException e) {
 			// Comunica alla view che c'è stato un errore generico del DB
 			ViewController.getInstance().ShowDBError_Modal();
-		} catch(EliminaException e) {
-			
 		}
 		
 	}
@@ -666,8 +538,6 @@ public class DataController {
 			
 		} catch(SQLException e) {
 			ViewController.getInstance().ShowDBError_Modal();
-		} catch(TrovaException e) {
-			
 		}
 		
 		return ""; // Può ritornare "" solo a seguito di un errore vero e proprio del DB.
@@ -729,7 +599,7 @@ public class DataController {
 			
 			// Prosegui con le view
 			System.out.println(biglietto.toString());
-		} catch(SQLException | TrovaException e) {
+		} catch(SQLException e) {
 			System.out.println("ERRORE!");
 			// Comunica alla view che c'è stato un errore generico del DB
 			ViewController.getInstance().ShowDBError_Modal();
@@ -770,7 +640,7 @@ public class DataController {
 			
 			// Prosegui con le view
 						
-		} catch(SQLException | TrovaException e) {
+		} catch(SQLException e) {
 			// Comunica alla view che c'è stato un errore generico del DB
 			ViewController.getInstance().ShowDBError_Modal();
 		}

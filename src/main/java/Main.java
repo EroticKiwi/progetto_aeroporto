@@ -10,7 +10,6 @@ import view.EntityDetails_View;
 public class Main {
 
 	public static void main(String[] args) {
-		EntityDetails_View finestra = new EntityDetails_View();
-		
+		ViewController.getInstance().ClientLogin_Activate();
 	}
 }

@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import enums.ActiveEntity_Enum;
+import model.*;
 import view.*;
 
 public class ViewController {
@@ -77,6 +78,18 @@ public class ViewController {
 	
 	public ActiveEntity_Enum GetActiveEntity_Enum() {
 		return activeEntity;
+	}
+	
+	public void Logout() { // Elimina le view con dati statici relativi al ruolo dell'utente e poi torna al login
+		
+		DisableAllViews();
+		
+		if(views.size() == 5) {
+			views.remove(4);
+		}
+		views.remove(3);
+		
+		ClientLogin_Activate();
 	}
 	
 	
@@ -165,13 +178,13 @@ public class ViewController {
 		 // findEntity_View.SetEntityList(DataController.getInstance().getEntities());
 		
 		FindEntity_View findEntity_View = (FindEntity_View) views.get(3);
-		findEntity_View.setJList_Entities();
+		findEntity_View.setJList_Entities(activeEntity);
 		ActivateView(3);
 	}
 	
 	// Metodi view EntityDetails_View
 	
-	public void EntityDetailsView_Activate(ActiveEntity_Enum activeEntity, int id) {
+	public void EntityDetailsView_Activate(ActiveEntity_Enum activeEntity, Object entity) {
 		
 		if(views.size() < 5) { // Abbiamo delineato un flusso ben preciso, sappiamo per certo che la finestra "FindEntity_View" sarà esattamente la quinta da creare.
 			views.add(new EntityDetails_View()); // Creiamo la finestra invece di instanziarla subito per non incorrere in errori con DataController, evitando dunque di fare accessi nulli.
@@ -181,24 +194,37 @@ public class ViewController {
 		
 		SetActiveEntity_Enum(activeEntity);
 		
+		EntityDetails_View entityDetails_view = (EntityDetails_View) views.get(4);
+		
+		if(entity instanceof Volo) {
+			Volo volo = (Volo) entity;
+			entityDetails_view.activateVoloPanel(volo);
+		}
+		
+		if(entity instanceof Biglietto) {
+			Biglietto biglietto = (Biglietto) entity;
+			entityDetails_view.activateBigliettoPanel(biglietto);
+		}
+		
+		if(entity instanceof Aeroporto) {
+			Aeroporto aeroporto = (Aeroporto) entity;
+			entityDetails_view.activateAeroportoPanel(aeroporto);
+		}
+		
+		if(entity instanceof Aereo) {
+			Aereo aereo = (Aereo) entity;
+			entityDetails_view.activateAereoPanel(aereo);
+		}
+		
+		if(entity instanceof Cliente) {
+			Cliente cliente = (Cliente) entity;
+			entityDetails_view.activateClientePanel(cliente);
+		}
+		
+		
 		// EntityDetails_View entityDetails_view = (EntityDetails_View) views.get(4);
 		
 		DataController.getInstance().clearEntities(); // Puliamo per sicurezza, anche se la lista viene pulita nel medesimo modo all'interno dei vari.
-		
-		switch(activeEntity) {
-		case ActiveEntity_Enum.Aereo:
-			DataController.getInstance().trovaAereo(id);
-			break;
-		case ActiveEntity_Enum.Aeroporto:
-			DataController.getInstance().trovaAeroporto(id);
-			break;
-		case ActiveEntity_Enum.Volo:
-			DataController.getInstance().trovaVolo(id);
-			break;
-		case ActiveEntity_Enum.Biglietto:
-			DataController.getInstance().trovaBiglietto(id);
-			break;
-	}
 		
 		// EntityDetails_View entityDetails_view.SetEntityData(DataController.getInstance().getEntities().get(0));
 		

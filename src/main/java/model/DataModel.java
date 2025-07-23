@@ -74,7 +74,7 @@ public class DataModel implements DAOGenerale{
 		
 	}
 
-	public void eliminaEntita(String query, Map<Integer, Object> params) throws EliminaException, SQLException{
+	public void eliminaEntita(String query, Map<Integer, Object> params) throws SQLException{
 		
 		PreparedStatement statement = null;
 		try {
@@ -86,17 +86,16 @@ public class DataModel implements DAOGenerale{
 			if(CheckDBException(e.getSQLState())) {
 				throw e;
 			}
-			throw new EliminaException();
 		}	finally {
 			try {
 				 statement.close();
 			} catch(SQLException e) {
-				throw new EliminaException();
+				throw e;
 			}
 		}
 	}
 
-	public ResultSet trovaEntita(String query, Map<Integer, Object> params) throws TrovaException, SQLException{
+	public ResultSet trovaEntita(String query, Map<Integer, Object> params) throws SQLException{
 		
 		PreparedStatement statement = null;
 		ResultSet rs = null;
@@ -109,16 +108,13 @@ public class DataModel implements DAOGenerale{
 			rs = statement.executeQuery();
 		} catch(SQLException e) {
 			System.out.println(e.getMessage());
-			if(CheckDBException(e.getSQLState())) {
-				throw e;
-			}
-			throw new TrovaException();
+			throw e;
 		}
 		
 		return rs;
 	}
 	
-	void AssemblaStatement(PreparedStatement statement, Map<Integer, Object> params) throws SQLException { // Metodo che ci permette di "assemblare" il PreparedStatement che useremo, direttamente nel model.
+	private void AssemblaStatement(PreparedStatement statement, Map<Integer, Object> params) throws SQLException { // Metodo che ci permette di "assemblare" il PreparedStatement che useremo, direttamente nel model.
 		
 		int index;
 		Object value;

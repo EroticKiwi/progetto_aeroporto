@@ -10,9 +10,8 @@ import java.awt.*;
 
 import listeners.FindEntities_Listener;
 import listeners.FindEntity_Listener;
+import listeners.Logout_Listener;
 import listeners.goTo.GoToAdminLogin_Listener;
-import listeners.goTo.GoToClientLogin_Listener;
-import listeners.goTo.GoToClientRegister_Listener;
 
 
 public class FindEntity_View extends JFrame {
@@ -33,6 +32,8 @@ public class FindEntity_View extends JFrame {
     private JButton sideButton2;
     private JButton sideButton3;
     private JButton logoutButton;
+    
+    private FindEntity_Listener entityListener; // Listener per aprire una specifica entità dalla lista di entità presenti
     
     
     
@@ -142,8 +143,8 @@ public class FindEntity_View extends JFrame {
         
         sideButton3.setFocusPainted(false);
         
-        FindEntity_Listener utenteDetailsListener = new FindEntity_Listener(ActiveEntity_Enum.Cliente, DataController.getInstance().getIdUtente());
-        sideButton3.addActionListener(utenteDetailsListener);
+        FindEntity_Listener utenteDetailsListener = new FindEntity_Listener();
+        sideButton3.addMouseListener(utenteDetailsListener);
         
         ovestContainer.add(sideButton3);
         ovestContainer.add(Box.createVerticalStrut(20));
@@ -164,8 +165,8 @@ public class FindEntity_View extends JFrame {
         
         
         
-        GoToClientLogin_Listener clientLogin = new GoToClientLogin_Listener();
-        logoutButton.addMouseListener(clientLogin);
+        Logout_Listener logoutListener = new Logout_Listener();
+        logoutButton.addActionListener(logoutListener);
     }
     
     void CreateSidebar_Admin() {
@@ -233,8 +234,8 @@ public class FindEntity_View extends JFrame {
         ovestContainer.add(Box.createVerticalStrut(20));
         
         
-        GoToAdminLogin_Listener adminLogin = new GoToAdminLogin_Listener();
-        logoutButton.addMouseListener(adminLogin);
+        Logout_Listener logoutListener = new Logout_Listener();
+        logoutButton.addActionListener(logoutListener);
     }
     
     void CreateCenterPanel() {
@@ -246,6 +247,8 @@ public class FindEntity_View extends JFrame {
         entities = new JList<Object>(DataController.getInstance().getEntities().toArray()); // Instanziamo la lista generica
         entities.setFont(new Font("Segoe UI", Font.BOLD, 25));
         entities.setFixedCellHeight(40); // Imposta manualmente l'altezza delle righe
+        entityListener = new FindEntity_Listener(ActiveEntity_Enum.Volo, entities);
+        entities.addMouseListener(entityListener);
         
         scrollPaneEntities = new JScrollPane();
         scrollPaneEntities.setViewportView(entities);
@@ -254,11 +257,12 @@ public class FindEntity_View extends JFrame {
         centerContainer.add(scrollPaneEntities, BorderLayout.CENTER);
     }
     
-    public void setJList_Entities() { // Premi sul listener -> ViewController.getInstance().FindEntityView_Activate -> FindEntity_View.SetJList_Entities();
+    public void setJList_Entities(ActiveEntity_Enum activeEntity) { // Premi sul listener -> ViewController.getInstance().FindEntityView_Activate -> FindEntity_View.SetJList_Entities();
         entities = new JList<Object>(DataController.getInstance().getEntities().toArray()); // Instanziamo la lista generica!
-        entities = new JList<Object>(DataController.getInstance().getEntities().toArray()); // Instanziamo la lista generica
         entities.setFont(new Font("Segoe UI", Font.BOLD, 18));
         entities.setFixedCellHeight(20); // Imposta manualmente l'altezza delle righe
+        entityListener = new FindEntity_Listener(activeEntity, entities);
+        entities.addMouseListener(entityListener);
         scrollPaneEntities.setViewportView(entities);
     }
 }
