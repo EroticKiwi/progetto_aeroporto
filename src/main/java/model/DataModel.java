@@ -4,7 +4,7 @@ package model;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+
 
 // Utilizziamo le Map per passare parametri alle query in modo flessibile (mappa di indice a valore)
 import java.util.Map;

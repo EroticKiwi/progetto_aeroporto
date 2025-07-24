@@ -177,7 +177,7 @@ public class DataController {
 			String pass = rs.getString("password");
 			String metodo_pagamento = rs.getString("metodo_pagamento");
 			
-			rs.getStatement().close();
+			rs.getStatement().close(); // Il metodo getStatement restituisce proprio il PreparedStatement che ha prodotto quel ResultSet
 			
 			utenteSessione = new Cliente(id, nome, cognome, mail, pass, metodo_pagamento);
 			
