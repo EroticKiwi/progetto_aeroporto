@@ -174,16 +174,16 @@ public class ViewController {
 		DataController.getInstance().clearEntities(); // Puliamo per sicurezza, anche se la lista viene pulita nel medesimo modo all'interno dei vari metodi
 		
 		switch(activeEntity) {
-			case ActiveEntity_Enum.Aereo:
+			case Aereo:
 				DataController.getInstance().trovaTuttiAerei();
 				break;
-			case ActiveEntity_Enum.Aeroporto:
+			case Aeroporto:
 				DataController.getInstance().trovaTuttiAeroporti();
 				break;
-			case ActiveEntity_Enum.Volo:
+			case Volo:
 				DataController.getInstance().trovaTuttiVoli();
 				break;
-			case ActiveEntity_Enum.Biglietto:
+			case Biglietto:
 				DataController.getInstance().trovaTuttiBiglietti();
 				break;
 		}
