@@ -54,6 +54,8 @@ public class Biglietto {
 		this.valido = valido;
 	}
 	
-	
+	public String toString() {
+		return id_volo + " | Valido: " + valido;
+	}
 
 }

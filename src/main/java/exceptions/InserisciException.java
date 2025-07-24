@@ -38,6 +38,18 @@ public class InserisciException extends Throwable
     		return "L'email inserita appartiene già ad un altro account.";
     	}
     	
+    	if(message.contains("aeroporto")) {
+    		return "Non esiste alcun aeroporto che corrisponde a quell'id.";
+    	}
+    	
+    	if(message.contains("aereo")) {
+    		return "Non esiste alcun aereo che corrisponde a quell'id.";
+    	}
+    	
+    	if(message.contains("")) {
+    		
+    	}
+    	
     	return message;
     }
 }

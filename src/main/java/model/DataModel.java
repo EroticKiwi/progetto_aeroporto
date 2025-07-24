@@ -111,6 +111,8 @@ public class DataModel implements DAOGenerale{
 			throw e;
 		}
 		
+		// La chiusura dello statement avviene nel metodo del DataController che ha chiamato qui per sicurezza! Non vogliamo accedere ad un RS potenzialmente vuoto!
+		
 		return rs;
 	}
 	
@@ -165,5 +167,12 @@ public class DataModel implements DAOGenerale{
 		return false;
 	}
 	
+	public void closeDBConnection() {
+		try {
+			DBConnection.getInstance().Disconnect();
+		} catch (SQLException e) {
+			// Se c'è stato un problema del DB in questo punto a noi non interessa, l'importante è disconnettersi e chiudere tutto.
+		}
+	}
 
 }

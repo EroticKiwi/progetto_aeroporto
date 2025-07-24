@@ -1,6 +1,5 @@
 package listeners;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -21,21 +20,15 @@ public class FindEntity_Listener implements MouseListener { // Viene chiamata qu
 		this.activeEntity = activeEntity;
 		this.entities = entities;
 	}
-	
-	public FindEntity_Listener() { // Chiamato per il tasto "il mio account". Non gli passiamo niente, sappiamo già che se abbiamo premuto su quel tasto dobbiamo visualizzare i dati del cliente
-		
-	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		
-		if(entities == null) {
-			Cliente cliente = (Cliente) DataController.getInstance().getUtenteSessione();
-			ViewController.getInstance().EntityDetailsView_Activate(ActiveEntity_Enum.Cliente, cliente);
+		int index = entities.locationToIndex(e.getPoint()); // prendiamo l'entità presente all'indice dove abbiamo cliccato
+		
+		if(index < 0) { // Se per qualche motivo la lista ritorna un indice non esistente ci fermiamo
 			return;
 		}
-		
-		int index = entities.locationToIndex(e.getPoint()); // prendiamo l'entità presente all'indice dove abbiamo cliccato
 		
 		Object entity = entities.getModel().getElementAt(index); // Istanziamo un entità generica e dopo controlliamo precisamente di che entità si tratta
 		

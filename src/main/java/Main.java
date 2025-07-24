@@ -1,6 +1,6 @@
 import controller.ViewController;
-import view.FindEntity_View;
 import view.EntityDetails_View;
+import view.FindEntity_View;
 
 /*
  * NOTE SULLE VIEW:

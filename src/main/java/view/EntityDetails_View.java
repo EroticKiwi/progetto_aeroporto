@@ -4,11 +4,14 @@ import javax.swing.*;
 
 import controller.DataController;
 import enums.ActiveEntity_Enum;
-import listeners.FindEntities_Listener;
-import listeners.FindEntity_Listener;
+import listeners.BuyBiglietto_Listener;
+import listeners.DeleteEntity_Listener;
 import listeners.Logout_Listener;
-import listeners.goTo.GoToAdminLogin_Listener;
-import listeners.goTo.GoToClientLogin_Listener;
+import listeners.OpenModifyVolo_Listener;
+import listeners.SendEntityData_Listener;
+import listeners.sidebar.ClienteDetails_Listener;
+import listeners.sidebar.FindEntities_Listener;
+import listeners.windowlisteners.CloseDBConn_Listener;
 import model.*;
 
 import java.awt.*;
@@ -17,6 +20,8 @@ public class EntityDetails_View extends JFrame {
 
     private JPanel ovestContainer;
     
+    // Sidebar
+    
     private JLabel registerTitleLabel;
     private JLabel accountinfoLabel;
 
@@ -24,6 +29,20 @@ public class EntityDetails_View extends JFrame {
     private JButton sideButton2;
     private JButton sideButton3;
     private JButton logoutButton;
+    
+	// Attributi Panel modifica Volo
+    
+    JPanel createVoloPanel;
+    
+    JTextField idAereo_field;
+    JTextField idAeroportoPartenza_field;
+    JTextField idAeroportoArrivo_field;
+    JTextField prezzo_field;
+    JTextField postiLiberi_field;
+    JTextField orarioPartenza_field;
+    JTextField orarioArrivo_field;
+    
+    JLabel insertError;
 
     // Attributi Panel Volo
     
@@ -32,7 +51,6 @@ public class EntityDetails_View extends JFrame {
     JLabel entitaVolo;
     JLabel idVolo;
     JLabel idAereo_Volo;
-    JLabel nomeVolo;
     JLabel idAeroportoPartenza;
     JLabel idAeroportoArrivo;
     JLabel prezzo;
@@ -85,10 +103,14 @@ public class EntityDetails_View extends JFrame {
     
     // Bottoni
     
-	JButton modifyButton;
+    // Il riutilizzo dei bottoni è reso difficile dal BoxLayout che stiamo usando per i panel, ecco perchè tutti questi bottoni.
+    JButton inserisciVoloButton;
+	JButton modificaVoloButton;
 	JButton deleteButton;
+	JButton cancelVoloButton;
+	JButton cancelBigliettoButton;
 	JButton buyButton;
-    
+	    
     public EntityDetails_View() {
         super("Mostra dettagli delle entità");
         this.setSize(1100, 700);
@@ -96,6 +118,10 @@ public class EntityDetails_View extends JFrame {
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.getContentPane().setLayout(new BorderLayout()); // BORDER LAYOUT PER IL CONTENT PANE
+        
+        // Aggiungiamo alla finestra il listener per chiudere il DB all'uscita!
+        CloseDBConn_Listener closeDBConn_Listener = new CloseDBConn_Listener();
+        this.addWindowListener(closeDBConn_Listener);
 
         // --- Pannello di sinistra ---
         ovestContainer = new JPanel();
@@ -112,17 +138,19 @@ public class EntityDetails_View extends JFrame {
         
         
         // METODO CHE CHIAMA IL PANNELLO DI DESTRA PER OGNI ENTITA SPECIFICA
-        createPanel_DettagliVolo();
-        createPanel_DettagliBiglietto();
-        createPanel_DettagliAeroporto();
-        createPanel_DettagliAereo();
-        createPanel_DettagliCliente();
+        createPanel_InsertVolo();
+        createPanel_DetailsVolo();
+        createPanel_DetailsBiglietto();
+        createPanel_DetailsAeroporto();
+        createPanel_DetailsAereo();
+        createPanel_DetailsCliente();
         
         createButtons(); // Creazione di tutti i bottoni
   
         CreateSidebar(); // Tutta la creazione della Sidebar la facciamo fare dentro ad un metodo, per avere un costruttore più ordinato ed un insieme di cose più modulare.
         this.getContentPane().add(ovestContainer, BorderLayout.WEST);
         
+        createVoloPanel.setVisible(false);
         voloPanel.setVisible(false);
         bigliettoPanel.setVisible(false);
         aeroportoPanel.setVisible(false);
@@ -134,12 +162,26 @@ public class EntityDetails_View extends JFrame {
     }
     
     private void createButtons() {
-    	if(modifyButton == null) {
-        	modifyButton = new JButton("Modifica");
+    	
+    	if(inserisciVoloButton == null) {
+    		inserisciVoloButton = new JButton("Inserisci");
     	}
-    	modifyButton.setForeground(new Color(51, 103, 153));
-    	modifyButton.setFont(new Font("Segoe UI", Font.BOLD, 16));
-    	modifyButton.setFocusPainted(false);
+    	inserisciVoloButton.setForeground(new Color(51, 103, 153));
+    	inserisciVoloButton.setFont(new Font("Segoe UI", Font.BOLD, 16));
+    	inserisciVoloButton.setFocusPainted(false);
+    	
+    	SendEntityData_Listener sendVolo_Listener = new SendEntityData_Listener();
+    	inserisciVoloButton.addActionListener(sendVolo_Listener);
+    	
+    	if(modificaVoloButton == null) {
+        	modificaVoloButton = new JButton("Modifica Volo");
+    	}
+    	modificaVoloButton.setForeground(new Color(51, 103, 153));
+    	modificaVoloButton.setFont(new Font("Segoe UI", Font.BOLD, 16));
+    	modificaVoloButton.setFocusPainted(false);
+    	
+    	OpenModifyVolo_Listener modifyVolo_Listener = new OpenModifyVolo_Listener();
+    	modificaVoloButton.addActionListener(modifyVolo_Listener);
     	
     	if(deleteButton == null) {
         	deleteButton = new JButton("Elimina");
@@ -150,6 +192,33 @@ public class EntityDetails_View extends JFrame {
     	deleteButton.setFont(new Font("Segoe UI", Font.BOLD, 16));
     	deleteButton.setFocusPainted(false);
     	
+    	DeleteEntity_Listener deleteEntity_Listener = new DeleteEntity_Listener(ActiveEntity_Enum.Cliente);
+    	deleteButton.addActionListener(deleteEntity_Listener);
+    	
+    	if(cancelVoloButton == null) {
+    		cancelVoloButton = new JButton("Annulla volo");
+    	}
+    	
+    	cancelVoloButton.setBackground(Color.RED);
+    	cancelVoloButton.setForeground(Color.WHITE);
+    	cancelVoloButton.setFont(new Font("Segoe UI", Font.BOLD, 16));
+    	cancelVoloButton.setFocusPainted(false);
+    	
+    	DeleteEntity_Listener cancelVolo_listener = new DeleteEntity_Listener(ActiveEntity_Enum.Volo); // Riutilizziamo DeleteEntity_Listener e all'interno chiamiamo un metodo differente
+    	cancelVoloButton.addActionListener(cancelVolo_listener);
+    	
+    	if(cancelBigliettoButton == null) {
+    		cancelBigliettoButton = new JButton("Annulla biglietto");
+    	}
+    	
+    	cancelBigliettoButton.setBackground(Color.RED);
+    	cancelBigliettoButton.setForeground(Color.WHITE);
+    	cancelBigliettoButton.setFont(new Font("Segoe UI", Font.BOLD, 16));
+    	cancelBigliettoButton.setFocusPainted(false);
+    	
+    	DeleteEntity_Listener cancelBiglietto_Listener = new DeleteEntity_Listener(ActiveEntity_Enum.Biglietto);
+    	cancelBigliettoButton.addActionListener(cancelBiglietto_Listener);
+    	
     	if(buyButton == null) {
         	buyButton = new JButton("Acquista un biglietto");
     	}
@@ -158,19 +227,97 @@ public class EntityDetails_View extends JFrame {
     	buyButton.setFont(new Font("Segoe UI", Font.BOLD, 16));
     	buyButton.setFocusPainted(false);
     	
-    	voloPanel.add(Box.createVerticalStrut(70));
-    	voloPanel.add(modifyButton);
-    	voloPanel.add(Box.createVerticalStrut(20));
-    	voloPanel.add(deleteButton);
+    	BuyBiglietto_Listener buyBiglietto_Listener = new BuyBiglietto_Listener();
+    	buyButton.addActionListener(buyBiglietto_Listener);
     	
-    	bigliettoPanel.add(Box.createVerticalStrut(70));
-    	bigliettoPanel.add(buyButton);
+    	// Aggiunta bottoni ai panel
+    	
+    	createVoloPanel.add(Box.createVerticalStrut(70));
+    	createVoloPanel.add(inserisciVoloButton);
+    	
+    	voloPanel.add(Box.createVerticalStrut(70));
+    	voloPanel.add(cancelVoloButton);
+    	voloPanel.add(Box.createVerticalStrut(20));
+    	voloPanel.add(modificaVoloButton);
+    	voloPanel.add(Box.createVerticalStrut(20));
+    	voloPanel.add(buyButton);
     	
     	clientePanel.add(Box.createVerticalStrut(70));
     	clientePanel.add(deleteButton);
+    	
+    	bigliettoPanel.add(Box.createVerticalStrut(70));
+    	bigliettoPanel.add(cancelBigliettoButton);
+    }
+    
+    private void createPanel_InsertVolo() {
+    	
+        createVoloPanel = new JPanel();
+        createVoloPanel.setLayout(new BoxLayout(createVoloPanel, BoxLayout.Y_AXIS));
+        createVoloPanel.setBackground(new Color(40, 44, 52));
+        createVoloPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 20, 30));
+
+        idAereo_field = new JTextField("Id Aereo:");
+        idAereo_field.setForeground(Color.BLACK);
+        idAereo_field.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        idAereo_field.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        idAeroportoPartenza_field = new JTextField("Id Aeroporto Partenza:");
+        idAeroportoPartenza_field.setForeground(Color.BLACK);
+        idAeroportoPartenza_field.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        idAeroportoPartenza_field.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        idAeroportoArrivo_field = new JTextField("Id Aeroporto Arrivo: ");
+        idAeroportoArrivo_field.setForeground(Color.BLACK);
+        idAeroportoArrivo_field.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        idAeroportoArrivo_field.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        prezzo_field = new JTextField("Prezzo: ");
+        prezzo_field.setForeground(Color.BLACK);
+        prezzo_field.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        prezzo_field.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        postiLiberi_field = new JTextField("Posti Liberi: ");
+        postiLiberi_field.setForeground(Color.BLACK);
+        postiLiberi_field.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        postiLiberi_field.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        orarioPartenza_field = new JTextField("Orario Partenza: ");
+        orarioPartenza_field.setForeground(Color.BLACK);
+        orarioPartenza_field.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        orarioPartenza_field.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        orarioArrivo_field = new JTextField("Orario Arrivo: ");
+        orarioArrivo_field.setForeground(Color.BLACK);
+        orarioArrivo_field.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        orarioArrivo_field.setAlignmentX(Component.LEFT_ALIGNMENT);
+        
+        insertError = new JLabel();
+        insertError.setForeground(Color.RED);
+        insertError.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        insertError.setAlignmentX(Component.LEFT_ALIGNMENT);
+        
+        insertError.setVisible(false);
+        
+        createVoloPanel.add(Box.createVerticalStrut(10));
+        createVoloPanel.add(idAereo_field);
+        createVoloPanel.add(Box.createVerticalStrut(10));
+        createVoloPanel.add(idAeroportoPartenza_field);
+        createVoloPanel.add(Box.createVerticalStrut(10));
+        createVoloPanel.add(idAeroportoArrivo_field);
+        createVoloPanel.add(Box.createVerticalStrut(10));
+        createVoloPanel.add(prezzo_field);
+        createVoloPanel.add(Box.createVerticalStrut(10));
+        createVoloPanel.add(postiLiberi_field);
+        createVoloPanel.add(Box.createVerticalStrut(10));
+        createVoloPanel.add(orarioPartenza_field);
+        createVoloPanel.add(Box.createVerticalStrut(10));
+        createVoloPanel.add(orarioArrivo_field);
+        createVoloPanel.add(Box.createVerticalStrut(30));
+        createVoloPanel.add(insertError);
+    	
     }
 
-    private void createPanel_DettagliVolo() {
+    private void createPanel_DetailsVolo() {
     	
         voloPanel = new JPanel();
         voloPanel.setLayout(new BoxLayout(voloPanel, BoxLayout.Y_AXIS));
@@ -191,11 +338,6 @@ public class EntityDetails_View extends JFrame {
         idAereo_Volo.setForeground(Color.WHITE);
         idAereo_Volo.setFont(new Font("Segoe UI", Font.BOLD, 16));
         idAereo_Volo.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-        nomeVolo = new JLabel("Nome Volo:");
-        nomeVolo.setForeground(Color.WHITE);
-        nomeVolo.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        nomeVolo.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         idAeroportoPartenza = new JLabel("Id Aeroporto Partenza:");
         idAeroportoPartenza.setForeground(Color.WHITE);
@@ -239,7 +381,6 @@ public class EntityDetails_View extends JFrame {
         voloPanel.add(Box.createVerticalStrut(10));
         voloPanel.add(idAereo_Volo);
         voloPanel.add(Box.createVerticalStrut(10));
-        voloPanel.add(nomeVolo);
         voloPanel.add(Box.createVerticalStrut(10));
         voloPanel.add(idAeroportoPartenza);
         voloPanel.add(Box.createVerticalStrut(10));
@@ -259,7 +400,7 @@ public class EntityDetails_View extends JFrame {
 
     }
 
-    private void createPanel_DettagliBiglietto() {
+    private void createPanel_DetailsBiglietto() {
     	
     	bigliettoPanel = new JPanel();
     	bigliettoPanel.setLayout(new BoxLayout(bigliettoPanel, BoxLayout.Y_AXIS));
@@ -305,7 +446,7 @@ public class EntityDetails_View extends JFrame {
         
     }
 
-    private void createPanel_DettagliAeroporto() {
+    private void createPanel_DetailsAeroporto() {
     	
     	aeroportoPanel = new JPanel();
     	aeroportoPanel.setLayout(new BoxLayout(aeroportoPanel, BoxLayout.Y_AXIS));
@@ -350,7 +491,7 @@ public class EntityDetails_View extends JFrame {
         
     }
 
-    private void createPanel_DettagliAereo() {
+    private void createPanel_DetailsAereo() {
     	
     	aereoPanel = new JPanel();
     	aereoPanel.setLayout(new BoxLayout(aereoPanel, BoxLayout.Y_AXIS));
@@ -394,7 +535,7 @@ public class EntityDetails_View extends JFrame {
         
     }
 
-    private void createPanel_DettagliCliente() {
+    private void createPanel_DetailsCliente() {
 
     	clientePanel = new JPanel();
     	clientePanel.setLayout(new BoxLayout(clientePanel, BoxLayout.Y_AXIS));
@@ -452,10 +593,30 @@ public class EntityDetails_View extends JFrame {
         
     }
     
+    public void disableActivePanel() {
+    	insertError.setVisible(false);
+        this.getContentPane().removeAll();
+        this.getContentPane().add(ovestContainer, BorderLayout.WEST);
+    }
+    
+    public void activateCreateVoloPanel(Volo volo) { // usiamo il .toString() per passare i dati in stringa
+        idAereo_field.setText(Integer.toString(volo.getId_aereo()));
+        idAeroportoPartenza_field.setText(Integer.toString(volo.getId_aeroporto_partenza()));
+        idAeroportoArrivo_field.setText(Integer.toString(volo.getId_aeroporto_arrivo()));
+        prezzo_field.setText(Float.toString(volo.getPrezzo()));
+        postiLiberi_field.setText(Integer.toString(volo.getPosti_liberi()));
+        orarioPartenza_field.setText(volo.getOrario_partenza());
+        orarioArrivo_field.setText(volo.getOrario_arrivo());
+        
+        createVoloPanel.setVisible(true);
+        
+    	disableActivePanel();
+    	this.getContentPane().add(createVoloPanel, BorderLayout.CENTER);
+    }
+    
     public void activateVoloPanel(Volo volo) {
         idVolo.setText("Id: " + volo.getId());
         idAereo_Volo.setText("Id Aereo: "+ volo.getId_aereo());
-        nomeVolo.setText("Nome volo: " + volo.getNome_volo());
         idAeroportoPartenza.setText("Id aeroporto di partenza: " + volo.getId_aeroporto_partenza());
         idAeroportoArrivo.setText("Id aeroporto di arrivo: " + volo.getId_aeroporto_arrivo());
         prezzo.setText("Prezzo biglietto: " + volo.getPrezzo());
@@ -463,16 +624,39 @@ public class EntityDetails_View extends JFrame {
         postiLiberi.setText("Posti Liberi: " + volo.getPosti_liberi());
         orarioPartenza.setText("Orario di partenza: " + volo.getOrario_partenza());
         orarioArrivo.setText("Orario di arrivo: " + volo.getOrario_arrivo());
+        
+        if(DataController.getInstance().isClient()) { // L'utente loggato è un cliente
+        	buyButton.setVisible(true);
+        	cancelVoloButton.setVisible(false);
+        	modificaVoloButton.setVisible(false);
+        } else { // L'utente loggato è un amministratore
+        	buyButton.setVisible(false);
+        	modificaVoloButton.setVisible(true);
+        	if(getVoloValido()) { // Attiviamo il bottone per annullare il volo solo se il volo in questione è ancora attivo!
+        		cancelVoloButton.setVisible(true);
+        	}
+        }
+        
     	voloPanel.setVisible(true);
-        this.getContentPane().add(voloPanel, BorderLayout.CENTER);
+    	
+    	disableActivePanel();
+    	this.getContentPane().add(voloPanel, BorderLayout.CENTER);
     }
     
     public void activateBigliettoPanel(Biglietto biglietto) {
         idBiglietto.setText("Id: " + biglietto.getId());
         idCliente_biglietto.setText("Id cliente: " + biglietto.getId_cliente());
         idVolo_biglietto.setText("Id volo: " + biglietto.getId_volo());
-        valido_biglietto.setText(valido_biglietto.getText() + biglietto.isValido());;
+        valido_biglietto.setText("Valido: " + biglietto.isValido());
         bigliettoPanel.setVisible(true);
+        disableActivePanel();
+        
+        if(getBigliettoValido()) {
+        	cancelBigliettoButton.setVisible(true);
+        } else {
+        	cancelBigliettoButton.setVisible(false);
+        }
+        
         this.getContentPane().add(bigliettoPanel, BorderLayout.CENTER);
     }
     
@@ -483,6 +667,7 @@ public class EntityDetails_View extends JFrame {
         numeroPiste.setText("Numero piste: " + aeroporto.getNumero_piste());
         aeroportoPanel.setVisible(true);
         System.out.println(aeroportoPanel.isVisible());
+        disableActivePanel();
         this.getContentPane().add(aeroportoPanel, BorderLayout.CENTER);
     }
     
@@ -492,6 +677,7 @@ public class EntityDetails_View extends JFrame {
         modello.setText("Modello: " + aereo.getModello());
         capienza.setText("Capienza: " + aereo.getCapienza());
         aereoPanel.setVisible(true);
+        disableActivePanel();
         this.getContentPane().add(aereoPanel, BorderLayout.CENTER);
     }
     
@@ -503,6 +689,7 @@ public class EntityDetails_View extends JFrame {
         cognome.setText("Cognome: " + cliente.getCognome());
         metodoPagamento.setText("Metodo di pagamento: " + cliente.getMetodo_pagamento());
         clientePanel.setVisible(true);
+        disableActivePanel();
         this.getContentPane().add(clientePanel, BorderLayout.CENTER);
     }
     
@@ -592,8 +779,8 @@ public class EntityDetails_View extends JFrame {
         
         sideButton3.setFocusPainted(false);
         
-        FindEntity_Listener utenteDetailsListener = new FindEntity_Listener();
-        sideButton3.addMouseListener(utenteDetailsListener);
+        ClienteDetails_Listener utenteDetailsListener = new ClienteDetails_Listener();
+        sideButton3.addActionListener(utenteDetailsListener);
         
         ovestContainer.add(sideButton3);
         ovestContainer.add(Box.createVerticalStrut(20));
@@ -685,5 +872,68 @@ public class EntityDetails_View extends JFrame {
         
         Logout_Listener logoutListener = new Logout_Listener();
         logoutButton.addActionListener(logoutListener);
+    }
+    
+    public int getVoloId() {
+    	// idVolo = "Id: 2", con getText().split(":") otteniamo due stringhe "Id:" e " 2"
+    	String[] strings = idVolo.getText().split(":"); // Dividiamo la stringa in fondamentalmente label a sinistra e valore a destra messi in un array, perchè altrimenti ci darà una stringa del tipo "Id: 2" che non è un intero!
+    	int id;
+    	if(strings.length == 1) {
+    		id = -1;
+    	} else {
+    		id = Integer.parseInt(strings[1].trim()); // Rimuove gli spazi vuoti all'inizio e alla fine della stringa. Molto importante per evitare dati sbagliati.
+    	}
+    	return id;
+    }
+    
+    public boolean getVoloValido() {
+    	String[] strings = valido_volo.getText().split(":");
+    	boolean valido = Boolean.parseBoolean(strings[1].trim());
+    	return valido;
+    }
+    
+    public int getBigliettoId() {
+    	String[] strings = idBiglietto.getText().split(":");
+    	int id = Integer.parseInt(strings[1].trim());
+    	return id;
+    }
+    
+    public boolean getBigliettoValido() {
+    	String[] strings = valido_biglietto.getText().split(":");
+    	boolean valido = Boolean.parseBoolean(strings[1].trim());
+    	return valido;
+    }
+    
+    public String getIdAereo_field() {
+    	return idAereo_field.getText();
+    }
+    
+    public String getIdAeroportoPartenza_field() {
+    	return idAeroportoPartenza_field.getText();
+    }
+    
+    public String getIdAeroportoArrivo_field() {
+    	return idAeroportoArrivo_field.getText();
+    }
+    
+    public String getPrezzo_field() {
+    	return prezzo_field.getText();
+    }
+    
+    public String getPostiLiberi_field() {
+    	return postiLiberi_field.getText();
+    }
+    
+    public String getOrarioPartenza_field() {
+    	return orarioPartenza_field.getText();
+    }
+    
+    public String getOrarioArrivo_field() {
+    	return orarioArrivo_field.getText();
+    }
+    
+    public void showError(String text) {
+    	insertError.setText(text);
+    	insertError.setVisible(true);
     }
 }

@@ -127,10 +127,7 @@ public class Volo {
 		this.valido = valido;
 	}
 	
-	
-	
-	
-	
-	
-
+	public String toString() {
+		return "ID: " + id + " | " + nome_volo + " | " + orario_partenza + " | " + orario_arrivo; 
+	}
 }

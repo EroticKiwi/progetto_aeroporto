@@ -5,8 +5,8 @@ import java.awt.*;
 
 import listeners.LoginRegister_Listener;
 import listeners.goTo.GoToAdminLogin_Listener;
-import listeners.goTo.GoToClientLogin_Listener;
 import listeners.goTo.GoToClientRegister_Listener;
+import listeners.windowlisteners.CloseDBConn_Listener;
 
 
 public class ClientLogin_View extends JFrame {
@@ -37,6 +37,10 @@ public class ClientLogin_View extends JFrame {
         this.setResizable(false); 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
         this.getContentPane().setLayout(new BorderLayout());
+        
+        // Aggiungiamo alla finestra il listener per chiudere il DB all'uscita!
+        CloseDBConn_Listener closeDBConn_Listener = new CloseDBConn_Listener();
+        this.addWindowListener(closeDBConn_Listener);
       
 
         ovestContainer = new JPanel(); 

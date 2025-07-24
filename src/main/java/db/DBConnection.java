@@ -10,7 +10,6 @@ public class DBConnection {
 	private static DBConnection instance;
 	
 	public Connection connection; // oggetto di tipo Connection per connettersi al database
-	public ResultSet rs; // oggetto di tipo ResultSet conserva i risultati delle query "SELECT"
 		
 	private DBConnection() throws SQLException {
 		try {

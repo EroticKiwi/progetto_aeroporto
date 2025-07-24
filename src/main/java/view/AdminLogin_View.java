@@ -4,9 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 
 import listeners.LoginRegister_Listener;
-import listeners.goTo.GoToAdminLogin_Listener;
 import listeners.goTo.GoToClientLogin_Listener;
-import listeners.goTo.GoToClientRegister_Listener;
+import listeners.windowlisteners.CloseDBConn_Listener;
 
 
 public class AdminLogin_View extends JFrame {
@@ -43,7 +42,9 @@ public class AdminLogin_View extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // (cliccando X), terminiamo il programma
         this.getContentPane().setLayout(new BorderLayout()); // Impostiamo il layout manager del content pane a BorderLayout (5 regioni: Nord, Sud, Est, Ovest, Centro)
 
-      
+        // Aggiungiamo alla finestra il listener per chiudere il DB all'uscita!
+        CloseDBConn_Listener closeDBConn_Listener = new CloseDBConn_Listener();
+        this.addWindowListener(closeDBConn_Listener);
 
         // --- JPanel OVEST (La barra laterale sinistra) ---
         ovestContainer = new JPanel(); // Inizializziamo il pannello OVEST

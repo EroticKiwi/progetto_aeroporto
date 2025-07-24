@@ -1,6 +1,5 @@
 package view;
 
-import model.Biglietto;
 import javax.swing.*;
 
 import controller.DataController;
@@ -8,18 +7,17 @@ import enums.ActiveEntity_Enum;
 
 import java.awt.*;
 
-import listeners.FindEntities_Listener;
 import listeners.FindEntity_Listener;
 import listeners.Logout_Listener;
-import listeners.goTo.GoToAdminLogin_Listener;
+import listeners.sidebar.ClienteDetails_Listener;
+import listeners.sidebar.FindEntities_Listener;
+import listeners.windowlisteners.CloseDBConn_Listener;
 
 
 public class FindEntity_View extends JFrame {
 
 	
 	private JList<Object> entities;
-	
-	
 	
     private JPanel ovestContainer;
     private JPanel centerContainer;
@@ -45,7 +43,9 @@ public class FindEntity_View extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.getContentPane().setLayout(new BorderLayout());
         
-        
+        // Aggiungiamo alla finestra il listener per chiudere il DB all'uscita!
+        CloseDBConn_Listener closeDBConn_Listener = new CloseDBConn_Listener();
+        this.addWindowListener(closeDBConn_Listener);
 
         CreateSidebar(); // Tutta la creazione della Sidebar la facciamo fare dentro ad un metodo, per avere un costruttore più ordinato ed un insieme di cose più modulare.
         
@@ -143,8 +143,8 @@ public class FindEntity_View extends JFrame {
         
         sideButton3.setFocusPainted(false);
         
-        FindEntity_Listener utenteDetailsListener = new FindEntity_Listener();
-        sideButton3.addMouseListener(utenteDetailsListener);
+        ClienteDetails_Listener utenteDetailsListener = new ClienteDetails_Listener();
+        sideButton3.addActionListener(utenteDetailsListener);
         
         ovestContainer.add(sideButton3);
         ovestContainer.add(Box.createVerticalStrut(20));

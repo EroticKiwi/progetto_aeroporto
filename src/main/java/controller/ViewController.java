@@ -69,7 +69,17 @@ public class ViewController {
 		// Magari dopo questo, mandiamo l'utente alla pagina login!
 	}
 	
+	public void ShowDeletion_Modal(String text) {
+		JOptionPane.showMessageDialog(views.get(activeView), text, "Operazione effettuata", JOptionPane.WARNING_MESSAGE);
+	}
 	
+	public void ShowInsert_Modal(String text) {
+		JOptionPane.showMessageDialog(views.get(activeView), text, "Operazione effettuata", JOptionPane.INFORMATION_MESSAGE);
+	}
+	
+	public void ShowBigliettoComprato_Modal() {
+		JOptionPane.showMessageDialog(views.get(activeView), "Il biglietto è stato acquistato!", "Operazione effettuata", JOptionPane.INFORMATION_MESSAGE);
+	}
 	
 	public void SetActiveEntity_Enum(ActiveEntity_Enum activeEntity) { // Quando andiamo su una pagina "Trova" o "Inserisci" chiamiamo questo metodo ed impostiamo l'entità per cui stiamo facendo queste operazioni.
 		this.activeEntity = activeEntity;
@@ -202,6 +212,7 @@ public class ViewController {
 		if(entity instanceof Volo) {
 			Volo volo = (Volo) entity;
 			entityDetails_view.activateVoloPanel(volo);
+			DataController.getInstance().setEntityObj(volo);
 		}
 		
 		if(entity instanceof Biglietto) {
@@ -220,17 +231,50 @@ public class ViewController {
 		}
 		
 		if(entity instanceof Cliente) {
+			System.out.println("qui");
 			Cliente cliente = (Cliente) entity;
 			entityDetails_view.activateClientePanel(cliente);
 		}
 		
-		
-		// EntityDetails_View entityDetails_view = (EntityDetails_View) views.get(4);
-		
 		DataController.getInstance().clearEntities(); // Puliamo per sicurezza, anche se la lista viene pulita nel medesimo modo all'interno dei vari.
 		
-		// EntityDetails_View entityDetails_view.SetEntityData(DataController.getInstance().getEntities().get(0));
+		ActivateView(4);
+	}
+	
+	public void EntityDetailsView_ActivateModifyPanel(Volo volo) {
+
+		DisableAllViews();
+		
+		EntityDetails_View entityDetails_view = (EntityDetails_View) views.get(4);
+		entityDetails_view.activateCreateVoloPanel(volo);
 		
 		ActivateView(4);
+	
+	}
+	
+	public void EntityDetailsView_ShowError(String text) {
+		EntityDetails_View entityDetails_view = (EntityDetails_View) views.get(4);
+		
+		entityDetails_view.showError(text);
+	}
+	
+	public int EntityDetailsView_GetVoloId() {
+		
+		EntityDetails_View entityDetails_View = (EntityDetails_View) views.get(4);
+		
+		return entityDetails_View.getVoloId();
+	}
+	
+	public boolean EntityDetailsView_GetVoloValidita() {
+		EntityDetails_View entityDetails_View = (EntityDetails_View) views.get(4);
+		
+		return entityDetails_View.getVoloValido();
+	}
+	
+	public int EntityDetailsView_GetBigliettoId() {
+		
+		EntityDetails_View entityDetails_View = (EntityDetails_View) views.get(4);
+		
+		return entityDetails_View.getBigliettoId();
 	}
 }

@@ -54,5 +54,8 @@ public class Aereo {
 		this.modello = modello;
 	}
 	
+	public String toString() {
+		return id + " | " + modello + " | " + capienza;
+	}
 
 }
