@@ -11,7 +11,7 @@ Realizzato per gli esami congiunti di *Programmazione ad oggetti* e *Basi Dati* 
 - Modifica e rimozione di voli da parte di amministratori.
 
 *Descrizione tecnica:*
-Programma che impiega il paradigma di programmazione a eventi sviluppato in JAVA che si collega ad un database Postgre.
+Programma che impiega il paradigma di programmazione a eventi sviluppato in JAVA che si collega ad un database Postgre. Le build del programma sono effettuate tramite Maven, sfruttando il file pom.xml che contiene i metadati relativi al programma.
 
 *Design Pattern implementati:*
 - Model View Controller (MVC) per la suddivisione dei compiti e della responsabilità tra *Interfaccia Utente*, *Gestione della logica applicativa* e *Gestione dei dati*. 
